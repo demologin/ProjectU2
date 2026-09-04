@@ -1,4 +1,4 @@
-package com.javarush.khmelov.controller;
+package com.javarush.khmelov.lesson13.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

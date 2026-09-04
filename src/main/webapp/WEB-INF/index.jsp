@@ -2,14 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>JSP - Hello Page</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Hello Page!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="list-user">User list</a>
 <br>
 <img src="images/img.png"  alt="demo">
+<br>
+Bad practice: 2+2*2=<%=2+2*2%>
 </body>
 </html>
