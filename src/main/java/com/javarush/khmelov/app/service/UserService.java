@@ -1,7 +1,7 @@
-package com.javarush.khmelov.lesson14.service;
+package com.javarush.khmelov.app.service;
 
-import com.javarush.khmelov.lesson14.entity.User;
-import com.javarush.khmelov.lesson14.repository.UserRepository;
+import com.javarush.khmelov.app.entity.User;
+import com.javarush.khmelov.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;

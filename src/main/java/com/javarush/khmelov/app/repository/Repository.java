@@ -1,6 +1,6 @@
-package com.javarush.khmelov.lesson14.repository;
+package com.javarush.khmelov.app.repository;
 
-import com.javarush.khmelov.lesson14.entity.User;
+import com.javarush.khmelov.app.entity.User;
 
 import java.util.Collection;
 import java.util.Optional;
