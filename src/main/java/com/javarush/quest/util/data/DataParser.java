@@ -1,11 +1,14 @@
 package com.javarush.quest.util.data;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 public interface DataParser {
 
-    <T> List<T> parse(InputStream stream, Class<T> elementType);
+    boolean canParse(String fileName);
 
-    boolean supports(String resourceName);
+    <T> T parse(InputStream stream, Class<T> targetType) throws IOException;
+
+    <T> List<T> parseList(InputStream stream, Class<T> elementType) throws IOException;
 }

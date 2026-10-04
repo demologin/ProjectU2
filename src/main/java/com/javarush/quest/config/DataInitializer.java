@@ -17,7 +17,7 @@ public class DataInitializer {
     private final SceneRepository sceneRepository;
 
     public void initialize() {
-        List<Quest> quests = resourceLoader.load("quests.yaml", Quest.class); //todo string constant
+        List<Quest> quests = resourceLoader.loadList("quests.yaml", Quest.class); //todo string constant
         for (Quest quest : quests) {
             quest.getScenes().forEach(sceneRepository::save);
             questRepository.save(quest);
