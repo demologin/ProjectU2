@@ -2,6 +2,7 @@ package com.javarush.quest.util;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.util.data.DataParser;
+import com.javarush.quest.util.data.JsonParser;
 import com.javarush.quest.util.data.YamlParser;
 import lombok.NonNull;
 
@@ -16,7 +17,8 @@ public class ResourceLoader {
     private static final String PARSING_EXCEPTION = "Cannot parse resource: ";
     private static final String UNSUPPORTED_FILE = "Cannot find appropriate parser for: ";
 
-    public ResourceLoader(YamlParser yamlParser) {
+    public ResourceLoader(JsonParser jsonParser, YamlParser yamlParser) {
+        parsers.add(jsonParser);
         parsers.add(yamlParser);
     }
 
@@ -49,6 +51,6 @@ public class ResourceLoader {
     }
 
     private InputStream mapResourceToStream(String resource) {
-        return this.getClass().getClassLoader().getResourceAsStream(resource);
+        return getClass().getClassLoader().getResourceAsStream(resource);
     }
 }

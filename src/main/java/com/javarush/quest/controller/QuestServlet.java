@@ -1,7 +1,6 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
-import com.javarush.quest.entity.Quest;
 import com.javarush.quest.service.QuestService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -21,8 +20,7 @@ public class QuestServlet extends HttpServlet {
                     throws ServletException, IOException {
         String questId = req.getParameter("id");
         if (questId != null) {
-            Quest quest = questService.findById(questId);
-            req.setAttribute("quest", quest);
+            req.setAttribute("quest", questService.findById(questId));
             req.getRequestDispatcher("/WEB-INF/quest.jsp").forward(req, resp);
         } else {
             resp.sendRedirect(req.getContextPath() + "/");

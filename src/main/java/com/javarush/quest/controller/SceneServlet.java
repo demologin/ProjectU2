@@ -1,7 +1,6 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
-import com.javarush.quest.entity.Scene;
 import com.javarush.quest.service.SceneService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -20,8 +19,7 @@ public class SceneServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
         String sceneId = req.getParameter("id");
-        Scene scene = sceneService.getSceneById(sceneId);
-        req.setAttribute("scene", scene);
+        req.setAttribute("scene", sceneService.getSceneById(sceneId));
         req.getRequestDispatcher("/WEB-INF/scene.jsp").forward(req, resp);
     }
 

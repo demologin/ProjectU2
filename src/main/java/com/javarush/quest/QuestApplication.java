@@ -13,7 +13,7 @@ public class QuestApplication implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ApplicationContext context = new ApplicationContext();
-        context.scan(this.getClass().getPackageName());
+        context.scan(getClass().getPackageName());
 
         context.getBean(DataInitializer.class).initialize();
         context.getBean(WebInitializer.class).registerServlets(
