@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.javarush.quest.entity.SystemAction" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <%@ include file="parts/header.jsp" %>
@@ -15,7 +16,17 @@
         </c:forEach>
 
         <c:forEach var="systemAction" items="${scene.systemActions}">
-            <a class="btn btn-secondary text-nowrap" role="button" href="#">${systemAction.text}</a>
+            <c:choose>
+                <c:when test="${systemAction == SystemAction.RESTART}">
+                    <c:url value='/quests' var="questUrl">
+                        <c:param name="id" value="${scene.questId}"/>
+                    </c:url>
+                    <a class="btn btn-primary text-nowrap" role="button" href="${questUrl}">Начать заново</a>
+                </c:when>
+                <c:when test="${systemAction == SystemAction.EXIT}">
+                    <a class="btn btn-primary text-nowrap" role="button" href="<c:url value='/'/>">На главную</a>
+                </c:when>
+            </c:choose>
         </c:forEach>
     </div>
 </div>

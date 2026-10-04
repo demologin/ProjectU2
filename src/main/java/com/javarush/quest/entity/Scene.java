@@ -10,6 +10,6 @@ public class Scene {
     private String text;
     private List<Option> options;
     private List<SystemAction> systemActions;
+    private String questId;
 
-    //questId ?
 }
