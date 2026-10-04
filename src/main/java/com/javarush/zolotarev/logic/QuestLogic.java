@@ -5,7 +5,7 @@ public class QuestLogic {
 
     public Question question(int step) {
         return switch (step) {
-            case 1 -> new Question(
+            case FIRST_STEP -> new Question(
                     "С чего начнёшь поиск работы?",
                     "Обновишь резюме и портфолио",
                     "Сразу пишешь «возьмите джуна» во все чаты",
