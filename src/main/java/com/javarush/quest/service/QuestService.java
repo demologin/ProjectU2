@@ -5,7 +5,7 @@ import com.javarush.quest.entity.Quest;
 import com.javarush.quest.repository.QuestRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class QuestService {
         return questRepository.findById(id).orElseThrow();
     }
 
-    public List<Quest> findAll() {
+    public Collection<Quest> findAll() {
         return questRepository.findAll();
     }
 }
