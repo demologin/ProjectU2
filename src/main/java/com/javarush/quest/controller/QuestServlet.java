@@ -20,7 +20,7 @@ public class QuestServlet extends HttpServlet {
                     throws ServletException, IOException {
         String questId = req.getParameter("id");
         if (questId != null) {
-            req.setAttribute("quest", questService.findById(questId));
+            req.setAttribute("quest", questService.getQuest(questId));
             req.getRequestDispatcher("/WEB-INF/quest.jsp").forward(req, resp);
         } else {
             resp.sendRedirect(req.getContextPath() + "/");

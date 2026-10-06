@@ -19,7 +19,7 @@ public class SceneServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
         String sceneId = req.getParameter("id");
-        req.setAttribute("scene", sceneService.getSceneById(sceneId));
+        req.setAttribute("scene", sceneService.getScene(sceneId));
         req.getRequestDispatcher("/WEB-INF/scene.jsp").forward(req, resp);
     }
 

@@ -23,6 +23,14 @@
   border-radius: .5rem;
 }
 
+.bs-icon.bs-icon-circle {
+  border-radius: 50%;
+}
+
+.aspect-ratio-16x9 {
+  aspect-ratio: 16/9;
+}
+
 .me-4:last-child {
   margin-right: 0 !important;
 }

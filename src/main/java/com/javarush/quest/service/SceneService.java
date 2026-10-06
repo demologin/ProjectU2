@@ -22,7 +22,7 @@ public class SceneService {
         return sceneRepository.findById(nextSceneId).orElseThrow();
     }
 
-    public Scene getSceneById(String sceneId) {
+    public Scene getScene(String sceneId) {
         return sceneRepository.findById(sceneId).orElseThrow();
     }
 }

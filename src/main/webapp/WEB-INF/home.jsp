@@ -17,8 +17,8 @@
             </c:url>
             <div class="col">
                 <div class="position-relative"><a class="stretched-link" href="${questUrl}"></a><img
-                        class="img-fluid object-fit-cover rounded d-block w-100"
-                        src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="${quest.name}">
+                        class="img-fluid aspect-ratio-16x9 object-fit-cover rounded d-block w-100"
+                        src="<c:url value='/assets/img/spaceship.jpg'/>" alt="${quest.name}">
                     <div class="py-4">
                         <h4>${quest.name}</h4>
                         <p>${quest.description}</p>

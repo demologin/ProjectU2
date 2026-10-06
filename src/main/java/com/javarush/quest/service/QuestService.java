@@ -12,11 +12,11 @@ import java.util.Collection;
 public class QuestService {
     private final QuestRepository questRepository;
 
-    public Quest findById(String id) {
-        return questRepository.findById(id).orElseThrow();
+    public Quest getQuest(String questId) {
+        return questRepository.findById(questId).orElseThrow();
     }
 
-    public Collection<Quest> findAll() {
+    public Collection<Quest> getQuests() {
         return questRepository.findAll();
     }
 }

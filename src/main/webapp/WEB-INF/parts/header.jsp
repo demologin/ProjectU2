@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Quest App</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<c:url value='/assets/img/favicon.png'/>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<c:url value='/assets/css/styles.css'/>">
 </head>
@@ -23,12 +24,25 @@
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-2"><span
                     class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-2">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#">Таблица рекордов</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Создать квест</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Профиль</a></li>
-                </ul>
-                <a class="btn btn-primary ms-md-2" role="button" href="#">Sign In</a>
+                <c:choose>
+                    <c:when test="${empty sessionScope.user}">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="#">Создать аккаунт</a></li>
+                        </ul>
+                        <a class="btn btn-primary ms-md-2" role="button" href="<c:url value='/login'/>">Войти</a>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url value='/user' var="profileUrl">
+                            <c:param name="id" value="${sessionScope.user.id}"/>
+                        </c:url>
+
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="#">Создать квест</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${profileUrl}">Профиль</a></li>
+                        </ul>
+                        <a class="btn btn-danger ms-md-2" role="button" href="<c:url value='/logout'/>">Выйти</a>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </nav>

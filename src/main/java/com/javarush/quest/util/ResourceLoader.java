@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class ResourceLoader {
     private final List<DataParser> parsers = new ArrayList<>();
-    private static final String PARSING_EXCEPTION = "Cannot parse resource: ";
+    private static final String PARSING_EXCEPTION = "Cannot parse resource: "; //todo message wrapping?
     private static final String UNSUPPORTED_FILE = "Cannot find appropriate parser for: ";
 
     public ResourceLoader(JsonParser jsonParser, YamlParser yamlParser) {
@@ -28,7 +28,7 @@ public class ResourceLoader {
         try (InputStream stream = mapResourceToStream(resource)) {
             return parser.parse(stream, targetType);
         } catch (IOException e) {
-            throw new RuntimeException(PARSING_EXCEPTION + resource, e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
@@ -38,7 +38,7 @@ public class ResourceLoader {
         try (InputStream stream = mapResourceToStream(resource)) {
             return parser.parseList(stream, elementType);
         } catch (IOException e) {
-            throw new RuntimeException(PARSING_EXCEPTION + resource, e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
