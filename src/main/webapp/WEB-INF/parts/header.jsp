@@ -33,7 +33,7 @@
                 <c:choose>
                     <c:when test="${empty user}">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="#">Создать аккаунт</a></li>
+                            <li class="nav-item"><a class="nav-link" href="<c:url value="${Url.SIGNUP}"/>">Создать аккаунт</a></li>
                         </ul>
                         <a class="btn btn-primary ms-md-2" role="button" href="<c:url value="${Url.LOGIN}"/>">Войти</a>
                     </c:when>

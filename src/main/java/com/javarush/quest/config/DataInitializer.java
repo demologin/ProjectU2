@@ -3,9 +3,8 @@ package com.javarush.quest.config;
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.Quest;
 import com.javarush.quest.entity.User;
-import com.javarush.quest.repository.QuestRepository;
-import com.javarush.quest.repository.SceneRepository;
-import com.javarush.quest.repository.UserRepository;
+import com.javarush.quest.service.QuestService;
+import com.javarush.quest.service.UserService;
 import com.javarush.quest.util.ResourceLoader;
 import lombok.RequiredArgsConstructor;
 
@@ -14,19 +13,18 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class DataInitializer {
+    private final UserService userService;
+    private final QuestService questService;
     private final ResourceLoader resourceLoader;
-    private final QuestRepository questRepository;
-    private final SceneRepository sceneRepository;
-    private final UserRepository userRepository;
+
+    private static final String USERS = "users.json";
+    private static final String QUESTS = "quests.yaml";
 
     public void initialize() {
-        List<Quest> quests = resourceLoader.loadList("quests.yaml", Quest.class); //todo string constant
-        for (Quest quest : quests) {
-            quest.getScenes().forEach(sceneRepository::save);
-            questRepository.save(quest);
-        }
+        List<User> users = resourceLoader.loadList(USERS, User.class);
+        users.forEach(userService::createUser);
 
-        List<User> users = resourceLoader.loadList("users.json", User.class);
-        users.forEach(userRepository::save);
+        List<Quest> quests = resourceLoader.loadList(QUESTS, Quest.class);
+        quests.forEach(questService::createQuest);
     }
 }

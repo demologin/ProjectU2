@@ -19,6 +19,7 @@ public class UserService {
     }
 
     public void createUser(User user) {
+        user.setId(userRepository.getId().incrementAndGet());
         userRepository.save(user);
     }
 }

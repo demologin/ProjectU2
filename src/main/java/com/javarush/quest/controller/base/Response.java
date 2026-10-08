@@ -12,8 +12,8 @@ public sealed interface Response {
 
     record Redirect(String target, Map<String, String> queryParams) implements Response {
 
-        public Redirect withParam(String key, String value) {
-            queryParams.put(key, value);
+        public Redirect withParam(String key, Object value) {
+            queryParams.put(key, value.toString());
             return this;
         }
     }
