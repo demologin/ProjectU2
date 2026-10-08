@@ -1,34 +1,30 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
+import com.javarush.quest.config.constant.Schema.Key;
+import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.controller.base.BaseServlet;
+import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.service.SceneService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
-@Servlet("/scenes")
+@Servlet(Url.SCENE)
 @RequiredArgsConstructor
-public class SceneServlet extends HttpServlet {
+public class SceneServlet extends BaseServlet {
     private final SceneService sceneService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                    throws ServletException, IOException {
-        String sceneId = req.getParameter("id");
-        req.setAttribute("scene", sceneService.getScene(sceneId));
-        req.getRequestDispatcher("/WEB-INF/scene.jsp").forward(req, resp);
+    protected Response handleGet(HttpServletRequest req) {
+        String sceneId = req.getParameter(Key.ID);
+        req.setAttribute(Key.SCENE, sceneService.getScene(sceneId));
+        return Response.DEFAULT;
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-                    throws ServletException, IOException {
-        String sceneId = req.getParameter("id");
-        String playerName = req.getParameter("playerName");
-        req.getSession().setAttribute("playerName", playerName);
-        resp.sendRedirect(req.getContextPath() + "/scenes?id=" + sceneId);
+    protected Response handlePost(HttpServletRequest req) {
+        //todo game service
+        String sceneId = req.getParameter(Key.ID);
+        return Response.redirect(Url.SCENE).withParam(Key.ID, sceneId);
     }
 }

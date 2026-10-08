@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.javarush.quest.config.constant.Schema.Url" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <%@ include file="parts/header.jsp" %>
-
 <section class="position-relative py-4 py-xl-5">
     <div class="container">
         <div class="row mb-5">
@@ -23,21 +23,22 @@
                         </div>
                         <form class="text-center" method="post">
                             <div class="mb-3"><label>
-                                <input class="form-control" type="text" name="login" placeholder="Имя пользователя" autofocus="" value="Carl"></label>
+                                <input class="form-control" type="text" name="login"
+                                       placeholder="Имя пользователя" autofocus="" value="Carl"></label>
                             </div>
                             <div class="mb-3"><label>
-                                <input class="form-control" type="password" name="password" placeholder="Пароль" value="admin"></label>
+                                <input class="form-control" type="password" name="password"
+                                       placeholder="Пароль" value="admin"></label>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary w-100 d-block" type="submit">Войти</button>
                             </div>
                         </form>
-                        <p class="text-muted">Нет аккаунта?&nbsp;<a href="<c:url value="/signup"/>">Создать новый</a></p>
+                        <p class="text-muted">Нет аккаунта?&nbsp;<a href="<c:url value="${Url.SIGNUP}"/>">Создать новый</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <%@include file="parts/footer.jsp" %>

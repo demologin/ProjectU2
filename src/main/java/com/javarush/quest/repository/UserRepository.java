@@ -2,6 +2,7 @@ package com.javarush.quest.repository;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.User;
+import com.javarush.quest.repository.base.BaseRepository;
 
 import java.util.Optional;
 

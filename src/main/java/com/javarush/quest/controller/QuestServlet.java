@@ -1,29 +1,23 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
+import com.javarush.quest.config.constant.Schema.Key;
+import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.controller.base.BaseServlet;
+import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.service.QuestService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
-@Servlet("/quests")
+@Servlet(Url.QUEST)
 @RequiredArgsConstructor
-public class QuestServlet extends HttpServlet {
+public class QuestServlet extends BaseServlet {
     private final QuestService questService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                    throws ServletException, IOException {
-        String questId = req.getParameter("id");
-        if (questId != null) {
-            req.setAttribute("quest", questService.getQuest(questId));
-            req.getRequestDispatcher("/WEB-INF/quest.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/");
-        }
+    protected Response handleGet(HttpServletRequest req) {
+        String questId = req.getParameter(Key.ID);
+        req.setAttribute(Key.QUEST, questService.getQuest(questId));
+        return Response.DEFAULT; //todo if questId == null
     }
 }

@@ -1,4 +1,4 @@
-package com.javarush.quest.repository;
+package com.javarush.quest.repository.base;
 
 import com.javarush.quest.entity.Entity;
 

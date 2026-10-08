@@ -1,24 +1,23 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
+import com.javarush.quest.config.constant.Schema.Jsp;
+import com.javarush.quest.config.constant.Schema.Key;
+import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.controller.base.BaseServlet;
+import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.service.QuestService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
-@Servlet("")
+@Servlet(Url.ROOT)
 @RequiredArgsConstructor
-public class HomeServlet extends HttpServlet {
+public class HomeServlet extends BaseServlet {
     private final QuestService questService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                    throws ServletException, IOException {
-        req.setAttribute("quests", questService.getQuests());
-        req.getRequestDispatcher("/WEB-INF/home.jsp").forward(req, resp);
+    protected Response handleGet(HttpServletRequest req) {
+        req.setAttribute(Key.QUESTS, questService.getQuests());
+        return Response.forward(Jsp.HOME);
     }
 }

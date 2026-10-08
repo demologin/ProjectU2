@@ -1,34 +1,26 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
+import com.javarush.quest.config.constant.Schema.Key;
+import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.controller.base.BaseServlet;
+import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.entity.User;
 import com.javarush.quest.service.UserService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
-@Servlet("/login")
+@Servlet(Url.LOGIN)
 @RequiredArgsConstructor
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
     private final UserService userService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/login.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
+    protected Response handlePost(HttpServletRequest req) {
+        String login = req.getParameter(Key.LOGIN);
+        String password = req.getParameter(Key.PASSWORD);
         User user = userService.getUser(login, password);
-        req.getSession().setAttribute("user", user);
-        resp.sendRedirect(req.getContextPath() + "/"); //todo go home?
+        req.getSession().setAttribute(Key.USER, user);
+        return Response.redirect(Url.HOME);
     }
 }

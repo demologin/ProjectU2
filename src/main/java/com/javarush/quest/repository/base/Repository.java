@@ -1,4 +1,4 @@
-package com.javarush.quest.repository;
+package com.javarush.quest.repository.base;
 
 import java.util.Collection;
 import java.util.Optional;

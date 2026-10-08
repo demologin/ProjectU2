@@ -1,20 +1,17 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
+import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.controller.base.BaseServlet;
+import com.javarush.quest.controller.base.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
-@Servlet("/logout")
-public class LogoutServlet extends HttpServlet {
+@Servlet(Url.LOGOUT)
+public class LogoutServlet extends BaseServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
+    protected Response handleGet(HttpServletRequest req) {
         req.getSession().invalidate();
-        resp.sendRedirect(req.getContextPath() + "/");
+        return Response.redirect(Url.LOGIN);
     }
 }
