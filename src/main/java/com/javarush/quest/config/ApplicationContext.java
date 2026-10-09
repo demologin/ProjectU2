@@ -82,7 +82,8 @@ public class ApplicationContext {
         return Arrays.stream(type.getAnnotations())
                 .map(Annotation::annotationType)
                 .filter(annotationType ->
-                        !annotationType.getPackageName().startsWith("java.lang.annotation"))
+                        !annotationType.getPackageName()
+                                       .startsWith("java.lang.annotation"))
                 .anyMatch(this::isComponent);
     }
 }

@@ -16,8 +16,8 @@ public class HomeServlet extends BaseServlet {
     private final QuestService questService;
 
     @Override
-    protected Response handleGet(HttpServletRequest req) {
-        req.setAttribute(Key.QUESTS, questService.getQuests());
+    protected Response handleGet(HttpServletRequest request) {
+        request.setAttribute(Key.QUESTS, questService.getQuests());
         return Response.forward(Jsp.HOME);
     }
 }

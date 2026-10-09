@@ -24,6 +24,7 @@ public class Schema {
     public class Url {
         public final String ROOT = "";
         public final String HOME = "/";
+        public final String WILDCARD = "/*";
 
         public final String LOGIN = HOME + Key.LOGIN;
         public final String LOGOUT = HOME + Key.LOGOUT;
@@ -37,8 +38,11 @@ public class Schema {
 
     @UtilityClass
     public class Jsp {
+        public final String ROOT = "/WEB-INF/";
+        public final String JSP = ".jsp"; //todo home -> home.jsp
+
         public final String HOME = "home";
         public final String PROFILE = "profile";
-
+        public final String ERROR = "error";
     }
 }

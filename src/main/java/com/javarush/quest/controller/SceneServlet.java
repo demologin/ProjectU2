@@ -21,17 +21,17 @@ public class SceneServlet extends BaseServlet {
     private final GameService gameService;
 
     @Override
-    protected Response handleGet(HttpServletRequest req) {
-        Scene scene = sceneService.getScene(req.getParameter(Key.ID));
+    protected Response handleGet(HttpServletRequest request) {
+        Scene scene = sceneService.getScene(request.getParameter(Key.ID));
 
         Long userId = Optional
-                .ofNullable(req.getSession().getAttribute(Key.USER))
+                .ofNullable(request.getSession().getAttribute(Key.USER))
                 .map(User.class::cast)
                 .map(User::getId)
                 .orElseThrow();
         gameService.saveGame(userId, scene.getQuestId(), scene.getId());
 
-        req.setAttribute(Key.SCENE, scene);
-        return Response.DEFAULT;
+        request.setAttribute(Key.SCENE, scene);
+        return Response.JSP;
     }
 }

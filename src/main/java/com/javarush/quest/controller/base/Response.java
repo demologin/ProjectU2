@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public sealed interface Response {
-    Response DEFAULT = new Default();
+    Response JSP = new Default(); //todo DEFAULT_JSP or JSP ?
 
     record Default() implements Response {}
 
@@ -12,12 +12,15 @@ public sealed interface Response {
 
     record Redirect(String target, Map<String, String> queryParams) implements Response {
 
+        //todo forward might need this as well? so move to Response class
         public Redirect withParam(String key, Object value) {
             queryParams.put(key, value.toString());
             return this;
         }
     }
 
+    //todo check isJsp here or in BaseServlet?
+    //check for target.endsWith(".jsp") instead to allow /foo/bar.jsp or foo/bar.jsp ?
     static Response forward(String target) {
         return new Forward(target, !target.startsWith("/"));
     }

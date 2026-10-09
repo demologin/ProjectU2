@@ -16,12 +16,12 @@ public class SignupServlet extends BaseServlet {
     private final UserService userService;
 
     @Override
-    protected Response handlePost(HttpServletRequest req) {
-        String login = req.getParameter(Key.LOGIN);
-        String password = req.getParameter(Key.PASSWORD);
+    protected Response handlePost(HttpServletRequest request) {
+        String login = request.getParameter(Key.LOGIN);
+        String password = request.getParameter(Key.PASSWORD);
         User user = userService.createUser(login, password);
 
-        req.getSession().setAttribute(Key.USER, user);
+        request.getSession().setAttribute(Key.USER, user);
         return Response
                 .redirect(Url.USERS)
                 .withParam(Key.ID, user.getId());

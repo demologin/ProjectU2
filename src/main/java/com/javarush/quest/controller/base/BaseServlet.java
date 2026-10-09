@@ -48,11 +48,11 @@ public abstract class BaseServlet extends HttpServlet {
         process(handlePost(req), req, resp);
     }
 
-    protected Response handleGet(HttpServletRequest req) {
-        return Response.DEFAULT;
+    protected Response handleGet(HttpServletRequest request) {
+        return Response.JSP;
     }
 
-    protected Response handlePost(HttpServletRequest req) {
+    protected Response handlePost(HttpServletRequest request) {
         throw new UnsupportedOperationException("Unsupported operation"); //todo or default?
     }
 

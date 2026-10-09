@@ -8,6 +8,7 @@ import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.entity.Game;
 import com.javarush.quest.entity.Quest;
 import com.javarush.quest.entity.Scene;
+import com.javarush.quest.entity.Scene.Type;
 import com.javarush.quest.entity.User;
 import com.javarush.quest.service.GameService;
 import com.javarush.quest.service.QuestService;
@@ -25,43 +26,43 @@ public class QuestServlet extends BaseServlet {
     private final GameService gameService;
 
     @Override
-    protected Response handleGet(HttpServletRequest req) {
+    protected Response handleGet(HttpServletRequest request) {
         Optional<User> userOpt = Optional
-                .ofNullable(req.getSession().getAttribute(Key.USER))
+                .ofNullable(request.getSession().getAttribute(Key.USER))
                 .map(User.class::cast);
         if (userOpt.isEmpty()) {
             return Response.redirect(Url.LOGIN);
         }
 
         Long userId = userOpt.get().getId();
-        String questId = req.getParameter(Key.ID); //todo if questId == null
+        String questId = request.getParameter(Key.ID); //todo if questId == null
         Quest quest = questService.getQuest(questId);
-        req.setAttribute(Key.QUEST, quest);
+        request.setAttribute(Key.QUEST, quest);
 
         Optional<Game> gameOpt = gameService.findGame(userId, questId);
         if (gameOpt.isEmpty()) {
-            return Response.DEFAULT;
+            return Response.JSP;
         }
 
         Game game = gameOpt.get();
         String sceneId = game.getCurrentSceneId();
         Scene scene = sceneService.getScene(sceneId);
 
-        if (scene.getType() == Scene.Type.GAME_OVER) {
+        if (scene.getType() == Type.GAME_OVER) {
             gameService.deleteGame(game);
-            return Response.DEFAULT;
+            return Response.JSP;
         }
         return Response.redirect(Url.SCENE).withParam(Key.ID, sceneId);
     }
 
     @Override
-    protected Response handlePost(HttpServletRequest req) {
+    protected Response handlePost(HttpServletRequest request) {
         Long userId = Optional
-                .ofNullable(req.getSession().getAttribute(Key.USER))
+                .ofNullable(request.getSession().getAttribute(Key.USER))
                 .map(User.class::cast)
                 .map(User::getId)
                 .orElseThrow(); //todo some helpers?
-        String questId = req.getParameter(Key.ID);
+        String questId = request.getParameter(Key.ID);
         String sceneId = questService.getQuest(questId).getStartSceneId();
 
         gameService.createGame(userId, questId, sceneId);

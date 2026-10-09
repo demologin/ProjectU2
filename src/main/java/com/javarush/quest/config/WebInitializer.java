@@ -12,12 +12,14 @@ public class WebInitializer {
                                  ApplicationContext applicationContext) {
         applicationContext.getBeans().forEach((type, bean) -> {
             if (HttpServlet.class.isAssignableFrom(type)
-                        && type.isAnnotationPresent(Servlet.class)) {
+                    && type.isAnnotationPresent(Servlet.class)
+            ) {
                 String[] urlPatterns = type.getAnnotation(Servlet.class).value();
 
                 if (urlPatterns.length > 0) {
-                    servletContext.addServlet(type.getSimpleName(), (HttpServlet) bean)
-                                  .addMapping(urlPatterns);
+                    servletContext
+                            .addServlet(type.getSimpleName(), (HttpServlet) bean)
+                            .addMapping(urlPatterns);
                 }
             }
         });

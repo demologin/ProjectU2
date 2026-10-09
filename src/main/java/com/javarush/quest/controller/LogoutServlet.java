@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class LogoutServlet extends BaseServlet {
 
     @Override
-    protected Response handleGet(HttpServletRequest req) {
-        req.getSession().invalidate();
+    protected Response handleGet(HttpServletRequest request) {
+        request.getSession().invalidate();
         return Response.redirect(Url.LOGIN);
     }
 }
