@@ -9,5 +9,7 @@ public interface Repository<T, ID> {
 
     Collection<T> findAll();
 
-    void save(T entity);
+    T save(T entity);
+
+    void delete(T entity);
 }

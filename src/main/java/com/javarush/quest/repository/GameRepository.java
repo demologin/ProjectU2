@@ -1,14 +1,14 @@
 package com.javarush.quest.repository;
 
 import com.javarush.quest.config.annotation.Component;
-import com.javarush.quest.entity.User;
+import com.javarush.quest.entity.Game;
 import com.javarush.quest.repository.base.BaseRepository;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Component
-public class UserRepository extends BaseRepository<User, Long> {
+public class GameRepository extends BaseRepository<Game, Long> {
     private final AtomicLong id = new AtomicLong();
 
     @Override
@@ -16,10 +16,10 @@ public class UserRepository extends BaseRepository<User, Long> {
         return id.getAndIncrement();
     }
 
-    public Optional<User> findBy(String login, String password) {
+    public Optional<Game> findBy(Long userId, String questId) {
         return map.values().stream()
-                .filter(user -> user.getLogin().equals(login))
-                .filter(user -> user.getPassword().equals(password))
+                .filter(game -> game.getUserId().equals(userId))
+                .filter(game -> game.getQuestId().equals(questId))
                 .findFirst();
     }
 }

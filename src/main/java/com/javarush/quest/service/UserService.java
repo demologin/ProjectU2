@@ -10,16 +10,19 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow();
-    }
-
     public User getUser(String login, String password) {
-        return userRepository.findByLoginAndPassword(login, password).orElseThrow();
+        return userRepository.findBy(login, password).orElseThrow();
     }
 
     public void createUser(User user) {
-        user.setId(userRepository.getId().incrementAndGet());
         userRepository.save(user);
+    }
+
+    public User createUser(String login, String password) {
+        User user = User.builder()
+                .login(login)
+                .password(password)
+                .build();
+        return userRepository.save(user);
     }
 }

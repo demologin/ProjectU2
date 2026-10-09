@@ -24,11 +24,11 @@
                         <form class="text-center" method="post">
                             <div class="mb-3"><label>
                                 <input class="form-control" type="text" name="login" placeholder="Имя пользователя"
-                                       autofocus=""></label>
+                                       autofocus="" value="test"></label>
                             </div>
                             <div class="mb-3"><label>
                                 <input class="form-control" type="password" name="password"
-                                       placeholder="Пароль"></label>
+                                       placeholder="Пароль" value="test"></label>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary w-100 d-block" type="submit">Создать аккаунт</button>

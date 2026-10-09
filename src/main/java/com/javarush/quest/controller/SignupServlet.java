@@ -17,12 +17,13 @@ public class SignupServlet extends BaseServlet {
 
     @Override
     protected Response handlePost(HttpServletRequest req) {
-        User user = User.builder()
-                .login(req.getParameter(Key.LOGIN))
-                .password(req.getParameter(Key.PASSWORD))
-                .build();
-        userService.createUser(user);
+        String login = req.getParameter(Key.LOGIN);
+        String password = req.getParameter(Key.PASSWORD);
+        User user = userService.createUser(login, password);
+
         req.getSession().setAttribute(Key.USER, user);
-        return Response.redirect(Url.USERS).withParam(Key.ID, user.getId());
+        return Response
+                .redirect(Url.USERS)
+                .withParam(Key.ID, user.getId());
     }
 }

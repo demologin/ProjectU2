@@ -12,6 +12,7 @@
     сержант Перегарный Шлейф, под штурвалом спит наш бортмеханик - Черный Богдан, а фотографирует
     его Сергей Стальная Пятка - наш навигатор.
     А как обращаться к вам?</p>
+  startSceneId: ship-0
   scenes:
     - id: ship-0
       questId: ship
@@ -22,48 +23,40 @@
           nextSceneId: ship-1
         - id: ship-0-1
           text: Отклонить вызов.
-          nextSceneId: ship-2
+          nextSceneId: ship-4
     - id: ship-1
       questId: ship
       text: Ты принял вызов. Поднимешься на мостик к капитану?
       options:
         - id: ship-1-0
           text: Подняться на мостик.
-          nextSceneId: ship-3
+          nextSceneId: ship-2
         - id: ship-1-1
           text: Отказаться подниматься на мостик.
-          nextSceneId: ship-4
+          nextSceneId: ship-5
     - id: ship-2
-      questId: ship
-      text: Ты отклонил вызов. <b>Поражение.</b>
-      systemActions:
-        - RESTART
-        - EXIT
-    - id: ship-3
       questId: ship
       text: Ты поднялся на мостик. Кто ты?
       options:
-        - id: ship-3-0
+        - id: ship-2-0
           text: Рассказать правду о себе.
-          nextSceneId: ship-5
-        - id: ship-3-1
+          nextSceneId: ship-3
+        - id: ship-2-1
           text: Солгать о себе.
           nextSceneId: ship-6
-    - id: ship-4
-      questId: ship
-      text: Ты не пошел на переговоры. <b>Поражение.</b>
-      systemActions:
-        - RESTART
-        - EXIT
-    - id: ship-5
+    - id: ship-3
       questId: ship
       text: Тебя вернули домой. <b>Победа!</b>
-      systemActions:
-        - RESTART
-        - EXIT
+      type: GAME_OVER
+    - id: ship-4
+      questId: ship
+      text: Ты отклонил вызов. <b>Поражение.</b>
+      type: GAME_OVER
+    - id: ship-5
+      questId: ship
+      text: Ты не пошел на переговоры. <b>Поражение.</b>
+      type: GAME_OVER
     - id: ship-6
       questId: ship
       text: Твою ложь разоблачили. <b>Поражение.</b>
-      systemActions:
-        - RESTART
-        - EXIT
+      type: GAME_OVER

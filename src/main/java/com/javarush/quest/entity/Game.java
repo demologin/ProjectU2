@@ -5,16 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Entity<Long> {
+public class Game implements Entity<Long> {
     private Long id;
-    private String login;
-    private String password;
-    private Collection<Game> games;
+    private Long userId;
+    private String questId;
+    private String currentSceneId;
+    //todo Map<?, ?> questParams; for params specific for each quest?
 
 }

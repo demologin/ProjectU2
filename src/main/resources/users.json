@@ -1,16 +1,13 @@
 [
   {
-    "id": 1,
     "login": "Carl",
     "password": "admin"
   },
   {
-    "id": 2,
     "login": "Alisa",
     "password": "qwerty"
   },
   {
-    "id": 3,
     "login": "Bob",
     "password": "123"
   }
