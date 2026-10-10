@@ -6,13 +6,11 @@ import com.javarush.quest.config.constant.Schema.Url;
 import com.javarush.quest.controller.base.BaseServlet;
 import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.entity.Game;
+import com.javarush.quest.entity.GameState;
 import com.javarush.quest.entity.Quest;
-import com.javarush.quest.entity.Scene;
-import com.javarush.quest.entity.Scene.Type;
 import com.javarush.quest.entity.User;
 import com.javarush.quest.service.GameService;
 import com.javarush.quest.service.QuestService;
-import com.javarush.quest.service.SceneService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +20,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QuestServlet extends BaseServlet {
     private final QuestService questService;
-    private final SceneService sceneService;
     private final GameService gameService;
 
     @Override
@@ -45,14 +42,13 @@ public class QuestServlet extends BaseServlet {
         }
 
         Game game = gameOpt.get();
-        String sceneId = game.getCurrentSceneId();
-        Scene scene = sceneService.getScene(sceneId);
-
-        if (scene.getType() == Type.GAME_OVER) {
+        if (game.getGameState() != GameState.PLAYING) {
             gameService.deleteGame(game);
             return Response.JSP;
         }
-        return Response.redirect(Url.SCENE).withParam(Key.ID, sceneId);
+
+        return Response.redirect(Url.SCENE)
+                .withParam(Key.ID, game.getCurrentSceneId());
     }
 
     @Override

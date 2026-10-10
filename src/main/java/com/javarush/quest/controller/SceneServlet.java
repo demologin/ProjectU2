@@ -29,7 +29,7 @@ public class SceneServlet extends BaseServlet {
                 .map(User.class::cast)
                 .map(User::getId)
                 .orElseThrow();
-        gameService.saveGame(userId, scene.getQuestId(), scene.getId());
+        gameService.saveGame(userId, scene);
 
         request.setAttribute(Key.SCENE, scene);
         return Response.JSP;

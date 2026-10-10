@@ -2,6 +2,8 @@ package com.javarush.quest.service;
 
 import com.javarush.quest.config.annotation.Component;
 import com.javarush.quest.entity.Game;
+import com.javarush.quest.entity.Scene;
+import com.javarush.quest.exception.EntityNotFoundException;
 import com.javarush.quest.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +14,10 @@ import java.util.Optional;
 public class GameService {
     private final GameRepository gameRepository;
 
+    public Optional<Game> findGame(Long userId, String questId) {
+        return gameRepository.findBy(userId, questId);
+    }
+
     public void createGame(Long userId, String questId, String sceneId) {
         Game game = Game.builder()
                 .userId(userId)
@@ -21,18 +27,12 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    public Optional<Game> findGame(Long userId, String questId) {
-        return gameRepository.findBy(userId, questId);
-    }
+    public void saveGame(Long userId, Scene currentScene) {
+        Game game = findGame(userId, currentScene.getQuestId())
+                .orElseThrow(() -> EntityNotFoundException.of(Game.class));
 
-    public void saveGame(Long userId, String questId, String sceneId) {
-        findGame(userId, questId).ifPresent(game -> {
-            game.setCurrentSceneId(sceneId);
-            gameRepository.save(game);
-        });
-    }
-
-    public void saveGame(Game game) {
+        game.setGameState(currentScene.getGameState());
+        game.setCurrentSceneId(currentScene.getId());
         gameRepository.save(game);
     }
 

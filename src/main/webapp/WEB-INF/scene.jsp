@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.javarush.quest.config.constant.Schema.Url" %>
-<%@ page import="com.javarush.quest.entity.Scene.Type" %>
+<%@ page import="com.javarush.quest.entity.GameState" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%--@elvariable id="scene" type="com.javarush.quest.entity.Scene"--%>
 
@@ -15,7 +15,7 @@
             <a class="btn btn-primary text-nowrap" role="button" href="${sceneUrl}">${option.text}</a>
         </c:forEach>
 
-        <c:if test="${scene.type == Type.GAME_OVER}">
+        <c:if test="${scene.gameState != GameState.PLAYING}">
             <c:url value="${Url.QUEST}" var="questUrl">
                 <c:param name="id" value="${scene.questId}"/>
             </c:url>

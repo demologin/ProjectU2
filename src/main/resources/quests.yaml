@@ -47,16 +47,16 @@
     - id: ship-3
       questId: ship
       text: Тебя вернули домой. <b>Победа!</b>
-      type: GAME_OVER
+      gameState: WON
     - id: ship-4
       questId: ship
       text: Ты отклонил вызов. <b>Поражение.</b>
-      type: GAME_OVER
+      gameState: LOST
     - id: ship-5
       questId: ship
       text: Ты не пошел на переговоры. <b>Поражение.</b>
-      type: GAME_OVER
+      gameState: LOST
     - id: ship-6
       questId: ship
       text: Твою ложь разоблачили. <b>Поражение.</b>
-      type: GAME_OVER
+      gameState: LOST

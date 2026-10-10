@@ -14,6 +14,7 @@ public class Game implements Entity<Long> {
     private Long userId;
     private String questId;
     private String currentSceneId;
+    private GameState gameState;
     //todo Map<?, ?> questParams; for params specific for each quest?
 
 }

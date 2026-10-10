@@ -16,10 +16,7 @@ public class Scene implements Entity<String> {
     private String id;
     private String text;
     private String questId;
-    private Type type = Type.NORMAL;
+    private GameState gameState = GameState.PLAYING;
     private final Collection<Option> options = new ArrayList<>();
 
-    public enum Type {
-        NORMAL, GAME_OVER
-    }
 }
