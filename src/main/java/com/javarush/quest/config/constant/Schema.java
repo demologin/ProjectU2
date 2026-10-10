@@ -1,48 +1,58 @@
 package com.javarush.quest.config.constant;
 
-import lombok.experimental.UtilityClass;
+import static com.javarush.quest.exception.ErrorMessage.UTILITY_CLASS;
 
-@UtilityClass
-public class Schema {
+public final class Schema {
 
-    @UtilityClass
-    public class Key {
-        public final String ID = "id";
-        public final String LOGIN = "login";
-        public final String LOGOUT = "logout";
-        public final String PASSWORD = "password";
-        public final String QUEST = "quest";
-        public final String QUESTS = "quests";
-        public final String SCENE = "scene";
-        public final String SIGNUP = "signup";
-        public final String USER = "user";
-        public final String USERS = "users";
+    public static final class Key {
+        public static final String ID = "id";
+        public static final String LOGIN = "login";
+        public static final String LOGOUT = "logout";
+        public static final String PASSWORD = "password";
+        public static final String QUEST = "quest";
+        public static final String QUESTS = "quests";
+        public static final String SCENE = "scene";
+        public static final String SIGNUP = "signup";
+        public static final String USER = "user";
+        public static final String USERS = "users";
 
+        private Key() {
+            throw new UnsupportedOperationException(UTILITY_CLASS);
+        }
     }
 
-    @UtilityClass
-    public class Url {
-        public final String ROOT = "";
-        public final String HOME = "/";
-        public final String WILDCARD = "/*";
+    public static final class Url {
+        public static final String ROOT = "";
+        public static final String HOME = "/";
+        public static final String WILDCARD = "/*";
 
-        public final String LOGIN = HOME + Key.LOGIN;
-        public final String LOGOUT = HOME + Key.LOGOUT;
-        public final String SIGNUP = HOME + Key.SIGNUP;
-        public final String USERS = HOME + Key.USERS;
+        public static final String LOGIN = HOME + Key.LOGIN;
+        public static final String LOGOUT = HOME + Key.LOGOUT;
+        public static final String SIGNUP = HOME + Key.SIGNUP;
+        public static final String USERS = HOME + Key.USERS;
 
-        public final String QUEST = HOME + Key.QUEST;
-        public final String SCENE = HOME + Key.SCENE;
+        public static final String QUEST = HOME + Key.QUEST;
+        public static final String SCENE = HOME + Key.SCENE;
 
+        private Url() {
+            throw new UnsupportedOperationException(UTILITY_CLASS);
+        }
     }
 
-    @UtilityClass
-    public class Jsp {
-        public final String ROOT = "/WEB-INF/";
-        public final String JSP = ".jsp"; //todo home -> home.jsp
+    public static final class Jsp {
+        public static final String JSP_FORMAT = "/WEB-INF/%s.jsp";
 
-        public final String HOME = "home";
-        public final String PROFILE = "profile";
-        public final String ERROR = "error";
+        public static final String INDEX = "index";
+        public static final String HOME = "home";
+        public static final String PROFILE = "profile";
+        public static final String ERROR = "error";
+
+        private Jsp() {
+            throw new UnsupportedOperationException(UTILITY_CLASS);
+        }
+    }
+
+    private Schema() {
+        throw new UnsupportedOperationException(UTILITY_CLASS);
     }
 }

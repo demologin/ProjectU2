@@ -6,10 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Component
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Servlet {
     String[] value() default {};
-    String jsp() default "";
+
+    String[] urlPatterns() default {};
+
+    String defaultJsp() default "";
 
 }

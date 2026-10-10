@@ -15,7 +15,7 @@ public class QuestApplication implements ServletContextListener {
         ApplicationContext context = new ApplicationContext();
         context.scan(getClass().getPackageName());
 
-        context.getBean(DataInitializer.class).initialize();
+        context.getBean(DataInitializer.class).loadData();
         context.getBean(WebInitializer.class).registerServlets(
                 sce.getServletContext(), context);
     }

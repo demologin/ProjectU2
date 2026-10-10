@@ -10,7 +10,7 @@ public class EntityNotFoundException extends AppException{
 
     public static EntityNotFoundException of(Class<?> type) {
         return new EntityNotFoundException(
-                String.format(ErrorMessage.NOT_FOUND, type.getSimpleName())
+                String.format(ErrorMessage.ENTITY_NOT_FOUND, type.getSimpleName())
         );
     }
 }

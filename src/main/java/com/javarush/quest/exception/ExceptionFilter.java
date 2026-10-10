@@ -22,16 +22,16 @@ public class ExceptionFilter implements Filter {
         } catch (Throwable e) {
             //todo log somewhere e.printStackTrace()
             resp.setStatus(500);
-            request.getRequestDispatcher(getPath()).forward(request, response);
+            request.getRequestDispatcher(buildPathToJsp()).forward(request, response);
         }
     }
 
     private static void extracted(ServletRequest request, ServletResponse response, EntityNotFoundException e, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(e.getHttpStatus());
-        request.getRequestDispatcher(getPath()).forward(request, response);
+        request.getRequestDispatcher(buildPathToJsp()).forward(request, response);
     }
 
-    private static String getPath() {
-        return Jsp.ROOT + Jsp.ERROR + Jsp.JSP;
+    private static String buildPathToJsp() {
+        return String.format(Jsp.JSP_FORMAT, Jsp.ERROR);
     }
 }

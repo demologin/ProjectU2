@@ -3,6 +3,7 @@ package com.javarush.quest.config;
 import com.javarush.quest.config.annotation.Component;
 import lombok.Getter;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -12,11 +13,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
-@Getter
+import static com.javarush.quest.exception.ErrorMessage.*;
+
 public class ApplicationContext {
+    @Getter
     private final Map<Class<?>, Object> beans = new ConcurrentHashMap<>();
 
     @SuppressWarnings("unchecked")
@@ -32,42 +36,43 @@ public class ApplicationContext {
             beans.put(type, bean);
             return bean;
         } catch (Exception e) {
-            throw new RuntimeException("Cannot create bean for class " + type.getName(), e);
+            throw new RuntimeException(CANNOT_CREATE_BEAN + type.getName(), e);
         }
     }
 
     public void scan(String basePackage) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        URL resource = classLoader.getResource(basePackage.replace('.', '/'));
+        URL resource = Thread.currentThread().getContextClassLoader()
+                .getResource(basePackage.replace('.', '/'));
 
         if (resource == null) {
-            throw new RuntimeException(basePackage + " not found");
+            throw new IllegalStateException(PACKAGE_NOT_FOUND + basePackage);
         }
-
         try (Stream<Path> walk = Files.walk(Paths.get(resource.toURI()))) {
             walk.filter(Files::isRegularFile)
-                    .filter(path -> path.toString().endsWith(".class"))
+                    .map(Path::toString)
+                    .filter(path -> path.endsWith(".class"))
                     .map(path -> mapPathToClass(path, basePackage))
                     .filter(this::isRegularClass)
                     .filter(this::isComponent)
                     .forEach(this::getBean);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(CANNOT_SCAN_PACKAGE + basePackage, e);
         }
     }
 
-    private Class<?> mapPathToClass(Path filePath, String basePackage) {
-        String pathWithDots = filePath.toString()
-                .replace(filePath.getFileSystem().getSeparator(), ".")
-                .replace(".class", "");
-
-        int beginIndex = pathWithDots.indexOf(basePackage);
-        String className = pathWithDots.substring(beginIndex);
-
+    private Class<?> mapPathToClass(String filePath, String basePackage) {
+        String className = Optional.of(filePath)
+                .map(path -> path.replace(File.separatorChar, '.'))
+                .map(path -> path.replace(".class", ""))
+                .filter(path -> path.contains(basePackage))
+                .map(path -> path.substring(path.indexOf(basePackage)))
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format(PACKAGE_NOT_FOUND_IN_PATH, basePackage, filePath)
+                ));
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(CLASS_NOT_FOUND + className, e);
         }
     }
 
@@ -81,9 +86,10 @@ public class ApplicationContext {
 
         return Arrays.stream(type.getAnnotations())
                 .map(Annotation::annotationType)
-                .filter(annotationType ->
-                        !annotationType.getPackageName()
-                                       .startsWith("java.lang.annotation"))
+                .filter(annotationType -> {
+                    String packageName = annotationType.getPackageName();
+                    return !packageName.startsWith("java.lang.annotation");
+                })
                 .anyMatch(this::isComponent);
     }
 }

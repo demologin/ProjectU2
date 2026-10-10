@@ -4,15 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public sealed interface Response {
-    Response JSP = new Default(); //todo DEFAULT_JSP or JSP ?
+    Response JSP = new JSP();
 
-    record Default() implements Response {}
+    record JSP() implements Response {}
 
     record Forward(String target, boolean isJsp) implements Response {}
 
     record Redirect(String target, Map<String, String> queryParams) implements Response {
 
-        //todo forward might need this as well? so move to Response class
         public Redirect withParam(String key, Object value) {
             queryParams.put(key, value.toString());
             return this;

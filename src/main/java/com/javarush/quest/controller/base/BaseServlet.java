@@ -1,10 +1,13 @@
 package com.javarush.quest.controller.base;
 
 import com.javarush.quest.config.annotation.Servlet;
+import com.javarush.quest.config.annotation.ServletMetadata;
+import com.javarush.quest.config.constant.Schema.Jsp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -13,39 +16,45 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-public abstract class BaseServlet extends HttpServlet {
-    private final String defaultJspName;
+import static com.javarush.quest.exception.ErrorMessage.ANNOTATION_REQUIRED;
+
+public abstract class BaseServlet extends HttpServlet implements ServletMetadata {
+    private final String defaultJsp;
 
     protected BaseServlet() {
-        Servlet meta = getClass().getAnnotation(Servlet.class);
-        if (meta == null) {
-            throw new IllegalStateException("No Servlet annotation found");
+        Servlet annotation = getClass().getAnnotation(Servlet.class);
+
+        if (annotation == null) {
+            throw new IllegalStateException(ANNOTATION_REQUIRED + getClass().getName());
         }
-        defaultJspName = setDefaultJspName(meta);
+
+        if (annotation.defaultJsp().isBlank()) {
+            String urlMapping = getUrlPatterns(annotation)[0];
+            defaultJsp = setDefaultJsp(urlMapping);
+        } else {
+            defaultJsp = annotation.defaultJsp();
+        }
     }
 
-    private String setDefaultJspName(Servlet meta) {
-        if (!meta.jsp().isBlank()) return meta.jsp();
-
-        String urlMapping = meta.value()[0];
+    private String setDefaultJsp(String urlMapping) {
         return Optional.of(urlMapping)
                 .map(m -> m.endsWith("/*") ? m.substring(0, m.length() - 2) : m)
                 .map(m -> m.startsWith("/") ? m.substring(1) : m)
                 .map(m -> m.contains("/") ? m.substring(m.lastIndexOf("/") + 1) : m)
                 .filter(m -> !m.isBlank())
-                .orElse("index"); //todo constant?
+                .orElse(Jsp.INDEX);
     }
 
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-        process(handleGet(req), req, resp);
+            throws ServletException, IOException {
+        process(req, resp, handleGet(req));
     }
 
     @Override
     protected final void doPost(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-        process(handlePost(req), req, resp);
+            throws ServletException, IOException {
+        process(req, resp, handlePost(req));
     }
 
     protected Response handleGet(HttpServletRequest request) {
@@ -53,20 +62,18 @@ public abstract class BaseServlet extends HttpServlet {
     }
 
     protected Response handlePost(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Unsupported operation"); //todo or default?
+        return Response.JSP;
     }
 
-    private void process(Response responseAction, HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
-        if (responseAction == null) return;
-
-        switch (responseAction) {
-            case Response.Default() -> {
-                String jsp = getJsp(defaultJspName);
+    private void process(HttpServletRequest req, HttpServletResponse resp,
+                         @NonNull Response action) throws ServletException, IOException {
+        switch (action) {
+            case Response.JSP() -> {
+                String jsp = buildPathToJsp(defaultJsp);
                 req.getRequestDispatcher(jsp).forward(req, resp);
             }
             case Response.Forward(String target, boolean isJsp) -> {
-                String path = isJsp ? getJsp(target) : target;
+                String path = isJsp ? buildPathToJsp(target) : target;
                 req.getRequestDispatcher(path).forward(req, resp);
             }
             case Response.Redirect(String target, Map<String, String> queryParams) -> {
@@ -76,8 +83,8 @@ public abstract class BaseServlet extends HttpServlet {
         }
     }
 
-    private String getJsp(String jsp) {
-        return String.format("/WEB-INF/%s.jsp", jsp);
+    private String buildPathToJsp(String jsp) {
+        return String.format(Jsp.JSP_FORMAT, jsp);
     }
 
     private String buildRedirectUrl(String target, Map<String, String> queryParams) {
