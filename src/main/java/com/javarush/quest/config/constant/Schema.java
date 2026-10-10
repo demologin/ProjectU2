@@ -42,10 +42,10 @@ public final class Schema {
     public static final class Jsp {
         public static final String JSP_FORMAT = "/WEB-INF/%s.jsp";
 
-        public static final String INDEX = "index";
-        public static final String HOME = "home";
-        public static final String PROFILE = "profile";
         public static final String ERROR = "error";
+        public static final String HOME = "home";
+        public static final String INDEX = "index";
+        public static final String PROFILE = "profile";
 
         private Jsp() {
             throw new UnsupportedOperationException(UTILITY_CLASS);

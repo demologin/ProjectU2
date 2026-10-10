@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DataInitializer {
+public class DataConfig {
     private final UserService userService;
     private final QuestService questService;
     private final ResourceLoader resourceLoader;

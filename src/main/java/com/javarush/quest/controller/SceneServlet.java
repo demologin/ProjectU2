@@ -12,8 +12,6 @@ import com.javarush.quest.service.SceneService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @Servlet(Url.SCENE)
 @RequiredArgsConstructor
 public class SceneServlet extends BaseServlet {
@@ -22,15 +20,9 @@ public class SceneServlet extends BaseServlet {
 
     @Override
     protected Response handleGet(HttpServletRequest request) {
+        Long userId = ((User) request.getAttribute(Key.USER)).getId();
         Scene scene = sceneService.getScene(request.getParameter(Key.ID));
-
-        Long userId = Optional
-                .ofNullable(request.getSession().getAttribute(Key.USER))
-                .map(User.class::cast)
-                .map(User::getId)
-                .orElseThrow();
         gameService.saveGame(userId, scene);
-
         request.setAttribute(Key.SCENE, scene);
         return Response.JSP;
     }

@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class WebInitializer implements ServletMetadata {
+public class WebConfig implements ServletMetadata {
 
     public void registerServlets(ServletContext servletContext,
                                  ApplicationContext applicationContext) {

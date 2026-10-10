@@ -24,7 +24,6 @@ public class QuestService {
         return questRepository.findAll();
     }
 
-    //todo generate ids
     public void createQuest(Quest quest) {
         questRepository.save(quest);
         quest.getScenes().forEach(sceneRepository::save);

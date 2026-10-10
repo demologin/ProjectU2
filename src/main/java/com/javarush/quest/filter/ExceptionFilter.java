@@ -1,13 +1,16 @@
-package com.javarush.quest.exception;
+package com.javarush.quest.filter;
 
 import com.javarush.quest.config.constant.Schema.Jsp;
 import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.exception.EntityNotFoundException;
+import jakarta.annotation.Priority;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+@Priority(1)
 @WebFilter(Url.WILDCARD)
 public class ExceptionFilter implements Filter {
 
@@ -26,7 +29,9 @@ public class ExceptionFilter implements Filter {
         }
     }
 
-    private static void extracted(ServletRequest request, ServletResponse response, EntityNotFoundException e, HttpServletResponse resp) throws ServletException, IOException {
+    private static void extracted(ServletRequest request, ServletResponse response,
+                                  EntityNotFoundException e, HttpServletResponse resp)
+            throws ServletException, IOException {
         resp.setStatus(e.getHttpStatus());
         request.getRequestDispatcher(buildPathToJsp()).forward(request, response);
     }
