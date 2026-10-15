@@ -3,12 +3,12 @@ package com.javarush.khmelov.cmd;
 import com.javarush.khmelov.entity.Role;
 import com.javarush.khmelov.entity.User;
 import com.javarush.khmelov.service.UserService;
+import com.javarush.khmelov.util.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
 
-@SuppressWarnings("unused")
 public class EditUser implements Command {
 
     private final UserService userService;
@@ -20,14 +20,11 @@ public class EditUser implements Command {
 
     @Override
     public String doGet(HttpServletRequest req) {
-        String stringId = req.getParameter("id");
+        String stringId = req.getParameter(Parameter.ID);
         if (stringId != null) {
             long id = Long.parseLong(stringId);
             Optional<User> optionalUser = userService.get(id);
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                req.setAttribute("user", user);
-            }
+            optionalUser.ifPresent(user -> req.setAttribute(Parameter.USER, user));
         }
         return getView();
     }
@@ -35,17 +32,17 @@ public class EditUser implements Command {
     @Override
     public String doPost(HttpServletRequest req) {
         User user = User.builder()
-                .login(req.getParameter("login"))
-                .password(req.getParameter("password"))
-                .role(Role.valueOf(req.getParameter("role")))
+                .login(req.getParameter(Parameter.LOGIN))
+                .password(req.getParameter(Parameter.PASSWORD))
+                .role(Role.valueOf(req.getParameter(Parameter.ROLE)))
                 .build();
-        if (req.getParameter("create") != null) {
+        if (req.getParameter(Parameter.CREATE) != null) {
             userService.create(user);
-        } else if (req.getParameter("update") != null) {
-            user.setId(Long.parseLong(req.getParameter("id")));
+        } else if (req.getParameter(Parameter.UPDATE) != null) {
+            user.setId(Long.parseLong(req.getParameter(Parameter.ID)));
             userService.update(user);
         }
-        return getView() + "?id=" + user.getId();
+        return getView() + "?" + Parameter.ID + "=" + user.getId();
     }
 
 

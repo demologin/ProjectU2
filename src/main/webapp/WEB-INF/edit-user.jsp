@@ -39,7 +39,6 @@
                 </div>
             </div>
 
-
             <!-- Select Basic -->
             <div class="form-group">
                 <label class="col-md-4 control-label" for="role">Role</label>
@@ -62,10 +61,8 @@
                     <c:if test="${requestScope.user!=null}">
                         <button id="update" name="update" class="btn btn-primary">Update</button>
                     </c:if>
-
                 </div>
             </div>
-
         </fieldset>
     </form>
 </div>

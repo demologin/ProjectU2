@@ -33,4 +33,8 @@ public class UserService {
     public Optional<User> get(long id) {
         return userRepository.get(id);
     }
+
+    public Optional<User> get(String login, String password) {
+        return userRepository.get(login, password);
+    }
 }

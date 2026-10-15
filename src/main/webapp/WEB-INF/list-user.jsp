@@ -3,6 +3,7 @@
 <body>
 <c:forEach var="user" items="${requestScope.users}">
     <a href="edit-user?id=${user.id}">${user.login}</a>
+    <br>
 </c:forEach>
 
 </body>

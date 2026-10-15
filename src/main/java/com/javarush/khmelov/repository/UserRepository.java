@@ -3,10 +3,7 @@ package com.javarush.khmelov.repository;
 import com.javarush.khmelov.entity.Role;
 import com.javarush.khmelov.entity.User;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class UserRepository implements Repository<User> {
@@ -19,7 +16,6 @@ public class UserRepository implements Repository<User> {
         map.put(1L, new User(1L, "Alisa", "qwerty", Role.USER));
         map.put(2L, new User(2L, "Bob", "", Role.GUEST));
         map.put(3L, new User(3L, "Carl", "admin", Role.ADMIN));
-        map.put(4L, new User(4L, "Khmelov", "admin", Role.ADMIN));
     }
 
     @Override
@@ -30,6 +26,15 @@ public class UserRepository implements Repository<User> {
     @Override
     public Optional<User> get(long id) {
         return Optional.ofNullable(map.get(id));
+    }
+
+    public Optional<User> get(String login, String password) {
+        for (Map.Entry<Long, User> entry : map.entrySet()) {
+            if (entry.getValue().getLogin().equals(login) && entry.getValue().getPassword().equals(password)) {
+                return Optional.of(entry.getValue());
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
