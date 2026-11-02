@@ -20,4 +20,5 @@ public class Question {
     private GameState gameState;
     private String image;
     private List<Answer> answers = new ArrayList<>();
+    private Long questId;
 }

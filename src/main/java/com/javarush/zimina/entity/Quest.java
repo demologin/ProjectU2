@@ -16,4 +16,5 @@ public class Quest {
     private String name;
     private String description;
     private Long startQuestionId;
+    private Long authorId;
 }

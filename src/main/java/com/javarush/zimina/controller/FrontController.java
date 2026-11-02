@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({Go.INDEX, Go.HOME, Go.SIGNUP, Go.LOGIN, Go.LOGOUT, Go.PROFILE, Go.LIST_QUEST, Go.PLAY_GAME})
+@WebServlet({Go.INDEX, Go.HOME, Go.SIGNUP, Go.LOGIN, Go.LOGOUT, Go.PROFILE, Go.LIST_QUEST, Go.PLAY_GAME, Go.CREATE_QUEST, Go.EDIT_QUEST})
 public class FrontController extends HttpServlet {
 
     private final HttpResolver httpResolver = Container.find(HttpResolver.class);

@@ -44,6 +44,7 @@
         <a href="list-quest">Квесты</a>
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
+                <a href="create-quest">Создать квест</a>
                 <a href="profile">Профиль</a>
                 <form method="post" action="logout">
                     <button type="submit">Выйти</button>

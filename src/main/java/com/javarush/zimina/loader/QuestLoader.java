@@ -29,7 +29,11 @@ public class QuestLoader {
             }
             QuestData data = mapper.readValue(input, QuestData.class);
 
-            // 1. Вопросы: создаём, сохраняем, запоминаем по метке
+            // 1. Квест: сохраняем сразу, чтобы получить его номер
+            Quest quest = new Quest(null, data.getName(), data.getDescription(), null, null);
+            questRepository.save(quest);
+
+            // 2. Вопросы: создаём, привязываем к квесту, запоминаем по метке
             Map<String, Question> byKey = new HashMap<>();
             for (QuestionData questionData : data.getQuestions()) {
                 Question question = new Question();
@@ -37,11 +41,12 @@ public class QuestLoader {
                 question.setText(questionData.getText());
                 question.setGameState(questionData.getState());
                 question.setImage(questionData.getImage());
+                question.setQuestId(quest.getId());
                 questionRepository.save(question);
                 byKey.put(questionData.getKey(), question);
             }
 
-            // 2. Ответы: метку "next" превращаем в номер вопроса
+            // 3. Ответы: метку "next" превращаем в номер вопроса
             for (QuestionData questionData : data.getQuestions()) {
                 Question question = byKey.get(questionData.getKey());
                 for (AnswerData answerData : questionData.getAnswers()) {
@@ -49,15 +54,12 @@ public class QuestLoader {
                     if (next == null) {
                         throw new RuntimeException("Нет вопроса с меткой: " + answerData.getNext());
                     }
-                    Answer answer = new Answer(null, answerData.getText(), next.getId());
-                    question.getAnswers().add(answer);
+                    question.getAnswers().add(new Answer(null, answerData.getText(), next.getId()));
                 }
             }
 
-            // 3. Квест: с какого вопроса начинать
-            Question start = byKey.get(data.getStart());
-            Quest quest = new Quest(null, data.getName(), data.getDescription(), start.getId());
-            questRepository.save(quest);
+            // 4. Стартовый вопрос
+            quest.setStartQuestionId(byKey.get(data.getStart()).getId());
 
         } catch (IOException e) {
             throw new RuntimeException("Не удалось прочитать квест: " + path, e);
