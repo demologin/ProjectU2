@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet({Go.INDEX, Go.HOME, Go.SIGNUP, Go.LOGIN, Go.LOGOUT, Go.PROFILE, Go.LIST_QUEST})
+@WebServlet({Go.INDEX, Go.HOME, Go.SIGNUP, Go.LOGIN, Go.LOGOUT, Go.PROFILE, Go.LIST_QUEST, Go.PLAY_GAME})
 public class FrontController extends HttpServlet {
 
     private final HttpResolver httpResolver = Container.find(HttpResolver.class);
@@ -23,6 +23,7 @@ public class FrontController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         Container.find(QuestLoader.class).load("quests/grimoire.json");
+        Container.find(QuestLoader.class).load("quests/bookseller.json");
     }
 
     @Override
