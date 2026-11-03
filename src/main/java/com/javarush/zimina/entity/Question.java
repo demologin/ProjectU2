@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question {
+public class Question implements Entity {
     private Long id;
     private String title;
     private String text;

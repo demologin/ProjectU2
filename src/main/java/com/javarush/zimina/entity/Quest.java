@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quest {
+public class Quest implements Entity {
 
     private Long id;
     private String name;

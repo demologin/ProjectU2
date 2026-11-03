@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameResult {
+public class GameResult implements Entity {
     private Long id;
     private Long questId;
     private Long userId;
