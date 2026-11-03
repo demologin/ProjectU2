@@ -11,7 +11,7 @@
 </p>
 
 <c:if test="${not empty sessionScope.user}">
-    <p>Рады видеть, ${sessionScope.user.login}.</p>
+    <p>Рады видеть, <c:out value="${sessionScope.user.login}"/>.</p>
 </c:if>
 
 <p style="margin-top: 32px;">

@@ -15,18 +15,12 @@ public class CreateQuest implements Command {
 
     @Override
     public String doGet(HttpServletRequest request) {
-        if (request.getSession().getAttribute(Key.USER) == null) {
-            return "login";
-        }
         return getView();
     }
 
     @Override
     public String doPost(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(Key.USER);
-        if (user == null) {
-            return Go.LOGIN;
-        }
         String name = request.getParameter(Key.NAME);
         String description = request.getParameter(Key.DESCRIPTION);
         if (name == null || name.isBlank()) {

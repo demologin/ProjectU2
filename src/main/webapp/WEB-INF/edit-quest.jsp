@@ -11,8 +11,8 @@
         <c:set var="quest" value="${requestScope.quest}"/>
 
         <p style="margin: 0 0 8px; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #B3AA98;">Конструктор квеста</p>
-        <h1>${quest.name}</h1>
-        <p style="color: #B3AA98;">${quest.description}</p>
+        <h1><c:out value="${quest.name}"/></h1>
+        <p style="color: #B3AA98;"><c:out value="${quest.description}"/></p>
 
         <div class="card" style="border-color: #D4B26A;">
             <h2 style="font-size: 24px;">Как собрать квест</h2>
@@ -45,10 +45,10 @@
                     </c:choose>
                     <c:if test="${question.id == quest.startQuestionId}"> · начало квеста</c:if>
                 </p>
-                <h2 style="font-size: 26px; margin: 4px 0 8px;">${question.title}</h2>
+                <h2 style="font-size: 26px; margin: 4px 0 8px;"><c:out value="${question.title}"/></h2>
 
                 <form method="post" action="edit-quest"
-                      onsubmit="return confirm('Удалить «${question.title}» и все варианты выбора, которые к ней ведут?');"
+                      onsubmit="return confirm('Удалить эту главу и все варианты выбора, которые к ней ведут?');"
                       style="max-width: none; margin: 0 0 8px; padding: 0; background: none; border: 0;">
                     <input type="hidden" name="action" value="deleteQuestion">
                     <input type="hidden" name="questId" value="${quest.id}">
@@ -56,7 +56,7 @@
                     <button type="submit" class="btn-outline" style="padding: 4px 10px; font-size: 13px;">Удалить главу</button>
                 </form>
 
-                <p>${question.text}</p>
+                <p><c:out value="${question.text}"/></p>
 
                 <c:if test="${question.gameState == 'PLAY'}">
                     <c:if test="${empty question.answers}">
@@ -71,8 +71,8 @@
                             <input type="hidden" name="questId" value="${quest.id}">
                             <input type="hidden" name="questionId" value="${question.id}">
                             <input type="hidden" name="answer" value="${status.index}">
-                            <span>→ ${answer.text}
-                                <span style="color: #B3AA98;">(ведёт к «${requestScope.titles[answer.nextQuestionId]}»)</span>
+                            <span>→ <c:out value="${answer.text}"/>
+                                <span style="color: #B3AA98;">(ведёт к «<c:out value="${requestScope.titles[answer.nextQuestionId]}"/>»)</span>
                             </span>
                             <button type="submit" class="btn-outline" style="padding: 4px 10px; font-size: 13px;">Удалить</button>
                         </form>
@@ -97,7 +97,7 @@
                                                 <c:when test="${target.gameState == 'WIN'}">Финал: </c:when>
                                                 <c:when test="${target.gameState == 'LOSE'}">Финал: </c:when>
                                                 <c:otherwise>Глава: </c:otherwise>
-                                            </c:choose>${target.title}
+                                            </c:choose><c:out value="${target.title}"/>
                                         </option>
                                     </c:forEach>
                                 </select>

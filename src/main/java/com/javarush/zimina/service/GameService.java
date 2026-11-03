@@ -17,6 +17,9 @@ public class GameService {
 
     public Question start(Long questId) {
         Quest quest = questRepository.findById(questId);
+        if (quest == null || quest.getStartQuestionId() == null) {
+            return null;
+        }
         return questionRepository.findById(quest.getStartQuestionId());
     }
 

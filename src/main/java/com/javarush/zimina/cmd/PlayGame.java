@@ -26,6 +26,9 @@ public class PlayGame implements Command {
         Question question;
         if (questId != null) {
             question = gameService.start(Long.valueOf(questId));
+            if (question == null) {
+                return getView();
+            }
             session.setAttribute(Key.QUEST_ID, Long.valueOf(questId));
         } else {
             Long questionId = (Long) session.getAttribute(Key.QUESTION_ID);

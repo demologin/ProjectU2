@@ -6,6 +6,9 @@
 <c:if test="${param.error == 'taken'}">
     <p>Такой логин уже занят.</p>
 </c:if>
+<c:if test="${param.error == 'empty'}">
+    <p>Логин и пароль не могут быть пустыми.</p>
+</c:if>
 
 <form method="post" action="signup">
     <p><label for="login">Логин</label><input id="login" name="login" type="text" required></p>

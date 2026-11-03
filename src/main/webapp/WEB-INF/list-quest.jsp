@@ -6,8 +6,8 @@
 <c:forEach var="quest" items="${requestScope.quests}">
     <c:set var="score" value="${requestScope.stats[quest.id]}"/>
     <article class="card">
-        <h2>${quest.name}</h2>
-        <p>${quest.description}</p>
+        <h2><c:out value="${quest.name}"/></h2>
+        <p><c:out value="${quest.description}"/></p>
         <p style="font-size: 14px; color: #B3AA98;">
             <c:choose>
                 <c:when test="${score.total == 0}">

@@ -16,6 +16,9 @@ public class Signup implements Command{
     public String doPost(HttpServletRequest request) {
         String login = request.getParameter(Key.LOGIN);
         String password = request.getParameter(Key.PASSWORD);
+        if (login == null || login.isBlank() || password == null || password.isBlank()) {
+            return Go.SIGNUP + "?error=empty";
+        }
         if(userService.register(login, password)){
             return Go.LOGIN;
         }

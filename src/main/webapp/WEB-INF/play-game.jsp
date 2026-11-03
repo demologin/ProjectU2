@@ -15,10 +15,10 @@
                     background-size: cover; background-position: center;"></div>
         </c:if>
 
-        <h1>${requestScope.question.title}</h1>
+        <h1><c:out value="${requestScope.question.title}"/></h1>
 
         <div class="card">
-            <p>${requestScope.question.text}</p>
+            <p><c:out value="${requestScope.question.text}"/></p>
         </div>
 
         <c:choose>
@@ -28,7 +28,7 @@
                           style="background: none; border: 0; padding: 0; max-width: none; margin: 0 0 12px;">
                         <input type="hidden" name="answer" value="${status.index}">
                         <button type="submit" class="btn-outline" style="width: 100%; text-align: left;">
-                                ${answer.text}
+                                <c:out value="${answer.text}"/>
                         </button>
                     </form>
                 </c:forEach>
@@ -37,7 +37,7 @@
                 <div style="text-align: center; padding: 40px 24px; border: 1px solid #D4B26A; border-radius: 12px;
                             background: radial-gradient(circle at center, rgba(212,178,106,0.20), transparent 70%);">
                     <p style="margin: 0; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #D4B26A;">Победа</p>
-                    <h2 style="font-size: 44px; margin: 8px 0 24px; color: #D4B26A;">Ты свободна</h2>
+                    <h2 style="font-size: 44px; margin: 8px 0 24px; color: #D4B26A;">Свобода</h2>
                     <a class="btn" href="list-quest">К списку квестов</a>
                 </div>
             </c:when>
@@ -45,7 +45,7 @@
                 <div style="text-align: center; padding: 40px 24px; border: 1px solid #E58A78; border-radius: 12px;
                             background: radial-gradient(circle at center, rgba(229,138,120,0.16), transparent 70%);">
                     <p style="margin: 0; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: #E58A78;">Поражение</p>
-                    <h2 style="font-size: 44px; margin: 8px 0 24px; color: #E58A78;">Гримуар победил</h2>
+                    <h2 style="font-size: 44px; margin: 8px 0 24px; color: #E58A78;">Книга победила</h2>
                     <a class="btn btn-outline" href="list-quest">Попробовать снова</a>
                 </div>
             </c:otherwise>
