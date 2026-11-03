@@ -20,6 +20,9 @@
             </c:choose>
         </p>
         <a class="btn" href="play-game?questId=${quest.id}">Начать</a>
+        <c:if test="${not empty sessionScope.user and (sessionScope.user.role == 'ADMIN' or sessionScope.user.id == quest.authorId)}">
+            <a class="btn btn-outline" href="edit-quest?questId=${quest.id}">Редактировать</a>
+        </c:if>
     </article>
 </c:forEach>
 

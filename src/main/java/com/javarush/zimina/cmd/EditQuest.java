@@ -26,7 +26,7 @@ public class EditQuest implements Command {
             return "login";
         }
         Long questId = Long.valueOf(request.getParameter(Key.QUEST_ID));
-        if (!questService.canEdit(questId, user.getId())) {
+        if (!questService.canEdit(questId, user)) {
             return getView();
         }
 
@@ -46,7 +46,7 @@ public class EditQuest implements Command {
     public String doPost(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(Key.USER);
         Long questId = Long.valueOf(request.getParameter(Key.QUEST_ID));
-        if (user == null || !questService.canEdit(questId, user.getId())) {
+        if (user == null || !questService.canEdit(questId, user)) {
             return Go.LIST_QUEST;
         }
 

@@ -11,9 +11,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+@Slf4j
 @WebServlet({Go.INDEX, Go.HOME, Go.SIGNUP, Go.LOGIN, Go.LOGOUT, Go.PROFILE, Go.LIST_QUEST, Go.PLAY_GAME, Go.CREATE_QUEST, Go.EDIT_QUEST})
 public class FrontController extends HttpServlet {
 
@@ -24,6 +26,7 @@ public class FrontController extends HttpServlet {
         super.init(config);
         Container.find(QuestLoader.class).load("quests/grimoire.json");
         Container.find(QuestLoader.class).load("quests/bookseller.json");
+        log.info("Quests loaded");
     }
 
     @Override

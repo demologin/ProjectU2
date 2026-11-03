@@ -1,6 +1,5 @@
 package com.javarush.zimina.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +14,5 @@ public class User {
     private Long id;
     private String login;
     private String password;
-
+    private Role role;
 }

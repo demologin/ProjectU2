@@ -4,12 +4,16 @@ import com.javarush.zimina.entity.Answer;
 import com.javarush.zimina.entity.GameState;
 import com.javarush.zimina.entity.Quest;
 import com.javarush.zimina.entity.Question;
+import com.javarush.zimina.entity.Role;
+import com.javarush.zimina.entity.User;
 import com.javarush.zimina.repository.QuestRepository;
 import com.javarush.zimina.repository.QuestionRepository;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 public class QuestService {
     private final QuestRepository questRepository;
     private final QuestionRepository questionRepository;
@@ -36,6 +40,7 @@ public class QuestService {
     public Long create(String name, String description, Long authorId) {
         Quest quest = new Quest(null, name, description, null, authorId);
         questRepository.save(quest);
+        log.info("Quest {} created by user {}",quest.getId(), authorId);
         return quest.getId();
     }
 
@@ -85,9 +90,15 @@ public class QuestService {
         }
     }
 
-    public boolean canEdit(Long questId, Long userId) {
+    public boolean canEdit(Long questId, User user) {
         Quest quest = questRepository.findById(questId);
-        return quest != null && userId != null && Objects.equals(quest.getAuthorId(), userId);
+        if (quest == null || user == null) {
+            return false;
+        }
+        if (user.getRole() == Role.ADMIN) {
+            return true;
+        }
+        return Objects.equals(quest.getAuthorId(), user.getId());
     }
 
     private Question findOwnQuestion(Long questId, Long questionId) {

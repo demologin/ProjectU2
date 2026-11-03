@@ -1,7 +1,7 @@
 package com.javarush.zimina.repository;
 
+import com.javarush.zimina.entity.Role;
 import com.javarush.zimina.entity.User;
-
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,9 +13,9 @@ public class UserRepository {
     private final AtomicLong nextId = new AtomicLong(1);
 
     public UserRepository() {
-        save(new User(null, "Anna", "123"));
-        save(new User(null, "Ilon", "Qwerty"));
-        save(new User(null, "Daniel", "321"));
+        save(new User(null, "Anna", "123", Role.ADMIN));
+        save(new User(null, "Ilon", "Qwerty", Role.USER));
+        save(new User(null, "Daniel", "321", Role.USER));
     }
 
     public void save(User user) {
