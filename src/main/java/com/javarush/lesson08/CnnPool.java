@@ -45,15 +45,12 @@ public class CnnPool {
         return (Connection) Proxy.newProxyInstance(
                 CnnPool.class.getClassLoader(),
                 new Class[]{Connection.class},
-                new InvocationHandler() {
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        if (!method.getName().equals("close")) {
-                            return method.invoke(connection, args);
-                        } else {
-                            connectionQueue.add((Connection) proxy);
-                            return null;
-                        }
+                (proxy, method, args) -> {
+                    if (!method.getName().equals("close")) {
+                        return method.invoke(connection, args);
+                    } else {
+                        connectionQueue.add((Connection) proxy);
+                        return null;
                     }
                 }
         );
