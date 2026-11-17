@@ -1,5 +1,7 @@
-package com.javarush.khmelov;
+package com.javarush.lesson06;
 
+import com.javarush.lesson07.Cnn;
+import com.javarush.lesson07.Configuration;
 import liquibase.Scope;
 import liquibase.command.CommandScope;
 import liquibase.resource.ClassLoaderResourceAccessor;
@@ -12,9 +14,9 @@ public class LessonLiqubaseInit {
             CommandScope update = new CommandScope("update");
 
             update.addArgumentValue("changelogFile", "db/changelog.xml");
-            update.addArgumentValue("url", "jdbc:postgresql://localhost:5432/game");
-            update.addArgumentValue("username", "postgres");
-            update.addArgumentValue("password", "postgres");
+            update.addArgumentValue("url", Configuration.getProperty(Cnn.DB_URI));
+            update.addArgumentValue("username", Configuration.getProperty(Cnn.DB_USER));
+            update.addArgumentValue("password", Configuration.getProperty(Cnn.DB_PASSWORD));
 
             update.execute();
         });
