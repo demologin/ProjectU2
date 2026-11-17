@@ -22,7 +22,7 @@ public class Cnn {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection get() throws SQLException {
         return DriverManager.getConnection(
                 Configuration.getProperty(DB_URI),
                 Configuration.getProperty(DB_USER),

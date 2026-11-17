@@ -11,7 +11,7 @@ public class ClientDemo {
 
     public static void main(String[] args) throws SQLException {
         try (
-                Connection connection = Cnn.getConnection();
+                Connection connection = Cnn.get();
                 Statement statement = connection.createStatement()
         ) {
             ResultSet resultSet = statement.executeQuery(SQL.SELECT_ALL_USERS);
