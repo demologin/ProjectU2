@@ -16,7 +16,10 @@ public class Scene implements Entity<String> {
     private String id;
     private String text;
     private String questId;
+
+    @Builder.Default
     private GameState gameState = GameState.PLAYING;
+
     private final Collection<Option> options = new ArrayList<>();
 
 }

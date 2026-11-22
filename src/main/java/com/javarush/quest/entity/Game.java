@@ -14,6 +14,8 @@ public class Game implements Entity<Long> {
     private Long userId;
     private String questId;
     private String currentSceneId;
+
+    @Builder.Default
     private GameState gameState = GameState.PLAYING;
 
 }

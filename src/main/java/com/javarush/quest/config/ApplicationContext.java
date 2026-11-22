@@ -45,7 +45,7 @@ public class ApplicationContext {
                 .getResource(basePackage.replace('.', '/'));
 
         if (resource == null) {
-            throw new IllegalStateException(PACKAGE_NOT_FOUND + basePackage);
+            throw new IllegalArgumentException(PACKAGE_NOT_FOUND + basePackage);
         }
         try (Stream<Path> walk = Files.walk(Paths.get(resource.toURI()))) {
             walk.filter(Files::isRegularFile)

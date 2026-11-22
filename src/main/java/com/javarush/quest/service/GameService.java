@@ -34,12 +34,12 @@ public class GameService {
         //userRepository.save(user); -- redundant with in-memory repo
     }
 
-    public void saveGame(Long userId, Scene currentScene) {
-        Game game = gameRepository.findFirstBy(userId, currentScene.getQuestId(), PLAYING)
+    public void saveGame(Long userId, Scene scene) {
+        Game game = gameRepository.findFirstBy(userId, scene.getQuestId(), PLAYING)
                 .orElseThrow(() -> EntityNotFoundException.of(Game.class));
 
-        game.setGameState(currentScene.getGameState());
-        game.setCurrentSceneId(currentScene.getId());
+        game.setCurrentSceneId(scene.getId());
+        game.setGameState(scene.getGameState());
         //gameRepository.save(game); -- redundant with in-memory repo
     }
 }
