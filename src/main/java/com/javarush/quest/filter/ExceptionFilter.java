@@ -1,8 +1,6 @@
 package com.javarush.quest.filter;
 
-import com.javarush.quest.config.constant.Schema.Jsp;
-import com.javarush.quest.config.constant.Schema.Key;
-import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.exception.AppException;
 import com.javarush.quest.exception.impl.InvalidCredentialsException;
 import jakarta.annotation.Priority;
@@ -15,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import static com.javarush.quest.exception.ErrorMessage.SERVER_ERROR;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 @Slf4j
 @Priority(1)

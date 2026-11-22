@@ -1,7 +1,7 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.config.annotation.Servlet;
-import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.controller.base.BaseServlet;
 import com.javarush.quest.controller.base.Response;
 import jakarta.servlet.http.HttpServletRequest;

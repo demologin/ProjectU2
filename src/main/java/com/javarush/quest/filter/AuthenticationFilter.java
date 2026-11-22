@@ -1,7 +1,6 @@
 package com.javarush.quest.filter;
 
-import com.javarush.quest.config.constant.Schema.Key;
-import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.entity.User;
 import jakarta.annotation.Priority;
 import jakarta.servlet.*;

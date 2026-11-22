@@ -8,7 +8,7 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.javarush.quest.exception.ErrorMessage.STARTUP_FAILED;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 @Slf4j
 @WebListener

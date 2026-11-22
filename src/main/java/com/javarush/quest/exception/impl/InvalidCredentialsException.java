@@ -4,7 +4,7 @@ import com.javarush.quest.exception.AppException;
 
 import java.net.HttpURLConnection;
 
-import static com.javarush.quest.exception.ErrorMessage.UNAUTHORIZED;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 public class InvalidCredentialsException extends AppException {
 

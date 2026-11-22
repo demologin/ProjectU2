@@ -2,7 +2,7 @@ package com.javarush.quest.controller.base;
 
 import com.javarush.quest.config.annotation.Servlet;
 import com.javarush.quest.config.annotation.ServletMetadata;
-import com.javarush.quest.config.constant.Schema.Jsp;
+import com.javarush.quest.config.constant.Schema.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-import static com.javarush.quest.exception.ErrorMessage.ANNOTATION_REQUIRED;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 public abstract class BaseServlet extends HttpServlet implements ServletMetadata {
     private final String defaultJsp;

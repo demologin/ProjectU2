@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.javarush.quest.exception.ErrorMessage.UNSUPPORTED_FILE;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 @Component
 public class ResourceLoader {

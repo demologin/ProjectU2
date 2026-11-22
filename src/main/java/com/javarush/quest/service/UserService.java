@@ -6,7 +6,7 @@ import com.javarush.quest.exception.impl.InvalidCredentialsException;
 import com.javarush.quest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import static com.javarush.quest.exception.ErrorMessage.INVALID_CREDENTIALS;
+import static com.javarush.quest.exception.ErrorMessage.*;
 
 @Component
 @RequiredArgsConstructor
