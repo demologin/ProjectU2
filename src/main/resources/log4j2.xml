@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <!-- Универсальный путь в домашнюю директорию пользователя -->
+        <Property name="LOG_DIR">${sys:user.home}/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Настройка RollingFile аппендера -->
+        <RollingFile name="ProjectU2Appender"
+                     fileName="${LOG_DIR}/projectU2.log"
+                     filePattern="${LOG_DIR}/projectU2.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}: %m%n"/>
+            <Policies>
+                <!-- Ротация происходит каждый день -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <!-- Стратегия удаления старых логов -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_DIR}" maxDepth="1">
+                    <IfFileName glob="projectU2.*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="ProjectU2Appender"/>
+        </Root>
+    </Loggers>
+</Configuration>
