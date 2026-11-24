@@ -12,10 +12,18 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude={"quests","games"})
+@ToString(exclude = {"quests", "games"})
 @Table(name = "users")
-public class User implements AbstractEntity{
+@NamedQueries({
+        @NamedQuery(name = User.GET_ALL, query = "select u from User u"),
+        @NamedQuery(name = User.GET_BETWEEN, query = "select u from User u where u.id between :minId and :maxId"),
+        @NamedQuery(name = User.GET_BY_ID, query = "select u from User u where u.id=:id order by u.id"),
+})
+public class User implements AbstractEntity {
 
+    public static final String GET_ALL = "user.getAll";
+    public static final String GET_BETWEEN = "user.getBetween";
+    public static final String GET_BY_ID = "user.getById";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
