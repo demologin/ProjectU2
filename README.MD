@@ -1,28 +1,70 @@
-# Quest U2
+# Quest App
+A lightweight web application for playing interactive text-based quests ("Choose Your Own Adventure" style).
+Built with Java Servlets and deployed on Apache Tomcat.
 
-### Ребята и девчата, всем привет!
+## Tech Stack
+* **Language:** Java 21
+* **Build Tool:** Maven
+* **Application Server:** Apache Tomcat 10.1.x (Jakarta EE 10 / Servlet 6.0)
+* **Templating / Frontend:** JSP, JSTL, HTML 5, CSS 3, Bootstrap 5
 
-На этот раз у нас более сложный проект, который будет трудно объединить в один общий проект со всем зависимостями.
-Поэтому поступим просто. Тут первоначально лежит наш учебный проект.
-Заготовка, такая же как может быть сгенерирована в IDEA.
-Договоримся, что Java у нас будет 21-я. У всех. Привыкайте использовать только LTS.
-Из зависимостей есть jakarta.servlet-api + jstl, JUnit5 и Lombok,
-так что POM.xml возможно надо будет заменить на свой.
+## Prerequisites
+Before running the project, make sure you have the following installed:
+1. [JDK 21](https://www.oracle.com/java/technologies/downloads/)
+2. [Apache Tomcat 10.1+](https://tomcat.apache.org/download-10.cgi)
+3. [Apache Maven 3.9+](https://maven.apache.org/download.cgi)
 
-### Что нужно сделать.
+## Installation and Running
+### 1. Clone the repository
+```bash
+git clone https://github.com/igrn/quest-app.git
+cd quest-app
+```
 
-1. Сделайте форк и затем клон этого репозитория.
-2. **СРАЗУ** создайте в нем ветку со своей фамилией, например, ivanov.
-3. Размещайте в своей ветке свое решение (если мои примеры мешают их можно просто удалить - ветвление же).
-4. В конце вам нужно будет сделать **Pull Request** из своей ветки (в своем форке) в такую же точно ветку (в этом удаленном
-   репозитории), если вы не найдете - тогда в **main** ну и затем ОБЯЗАТЕЛЬНО заполнить форму проектов. 
-5. Я положу в ветку **khmelov** тот пример, который буду параллельно с вами разрабатывать на факультативах. Полезнее будет
-   не копипастить, смотрите видео, разбирайтесь, что, почему, где и как сделано. Не копируйте, нужно ВАШЕ решение. Но мы уже и
-   не совсем зеленые, правда ведь ;).
-6. Проверять проекты по итогам третьего модуля я буду с **code review**, и скорее всего быстро не получится, так что за
-   сроки сдачи можно не волноваться.
-7. Планируйте время так, первые три консультации - основной функционал. Последняя консультация - плюшки, рефакторинг,
-   тесты, красоты.
-8. Если будут какие-то моменты - я обновлю это README. Поглядывайте периодически.
+### 2. Build the project
+Build the `.war` archive using Maven:
+```bash
+mvn clean package
+```
+The compiled file `quest-app.war` will appear in the `target/` directory.
 
-#### _2026 JRU U2, Александр Хмелев._
+### 3. Deploy to Tomcat
+1. Copy `target/quest-app.war` into the `webapps/` folder of your Tomcat installation directory.
+2. Start the server:
+   * **Linux / macOS:** `./bin/startup.sh`
+   * **Windows:** `bin\startup.bat`
+3. Open the application in your browser at: `http://localhost:8080/quest-app/`
+
+## Main Endpoints (Routes)
+| Method | URL          | Description              |
+|:-------|:-------------|:-------------------------|
+| `GET`  | `/`          | Application home page    |
+| `POST` | `/signup`    | Register a new user      |
+| `GET`  | `/login`     | User login page          |
+| `GET`  | `/users?id=` | User profile page        |
+| `GET`  | `/quest?id=` | Quest exposition page    |
+| `POST` | `/quest?id=` | Start a quest            |
+| `GET`  | `/scene?id=` | Show a quest scene       |
+
+## Project Structure
+```text
+├── src/
+│   ├── main/
+│   │   ├── java/...
+│   │   │   ├── config/       # Configuration and DI-container
+│   │   │   ├── controller/   # Servlets (HTTP request handling)
+│   │   │   ├── entity/       # Domain entities
+│   │   │   ├── exception/    # Custom exceptions
+│   │   │   ├── filter/       # Filters (authentication, exception)
+│   │   │   ├── repository/   # Database access
+│   │   │   ├── service/      # Business logic
+│   │   │   └── util/         # Utility classes
+│   │   ├── resources/        # Property files and sample resources
+│   │   └── webapp/
+│   │       ├── WEB-INF/      # JSP views (hidden from direct access)
+│   │       └── assets/       # CSS, images
+└── pom.xml                   # Dependencies and build configuration
+```
+
+## Author
+* **Igor Zelenin** — [GitHub](https://github.com/igrn)
