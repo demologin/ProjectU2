@@ -20,8 +20,7 @@ public class QuestApplication implements ServletContextListener {
         try {
             log.info("Loading application context");
             ApplicationContext context = new ApplicationContext();
-            String basePackage = getClass().getPackageName();
-            context.scan(basePackage);
+            context.scan(QuestApplication.class);
             log.info("Application context initialized");
 
             log.info("Loading data config");

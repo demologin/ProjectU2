@@ -14,7 +14,10 @@
                     <c:param name="id" value="${option.nextSceneId}"/>
                 </c:url>
                 <li class="list-group-item fw-normal d-flex align-items-center lead">
-                    <a class="fw-normal text-decoration-none ms-2 lead" href="${sceneUrl}">${option.text}</a>
+                    <form action="${sceneUrl}" method="post" class="m-0 ms-2">
+                        <button type="submit" class="btn btn-link fs-5 fw-medium
+                                text-decoration-none text-start p-1">${option.text}</button>
+                    </form>
                 </li>
             </c:forEach>
         </ol>

@@ -19,10 +19,19 @@ public class SceneServlet extends BaseServlet {
 
     @Override
     protected Response handleGet(HttpServletRequest request) {
-        Long userId = ((User) request.getAttribute(Key.USER)).getId();
-        Scene scene = sceneService.getScene(request.getParameter(Key.ID));
-        gameService.saveGame(userId, scene);
+        String sceneId = request.getParameter(Key.ID);
+        Scene scene = sceneService.getScene(sceneId);
         request.setAttribute(Key.SCENE, scene);
         return Response.JSP;
+    }
+
+    @Override
+    protected Response handlePost(HttpServletRequest request) {
+        Long userId = ((User) request.getAttribute(Key.USER)).getId();
+        String sceneId = request.getParameter(Key.ID);
+        Scene scene = sceneService.getScene(sceneId);
+
+        gameService.saveGame(userId, scene);
+        return Response.redirect(Url.SCENE).withParam(Key.ID, sceneId);
     }
 }

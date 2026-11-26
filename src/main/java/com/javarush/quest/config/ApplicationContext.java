@@ -4,16 +4,17 @@ import com.javarush.quest.config.annotation.Component;
 import lombok.Getter;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
@@ -40,35 +41,42 @@ public class ApplicationContext {
         }
     }
 
-    public void scan(String basePackage) {
-        URL resource = Thread.currentThread().getContextClassLoader()
-                .getResource(basePackage.replace('.', '/'));
+    public void scan(Class<?> rootClass) {
+        String basePackage = rootClass.getPackageName();
+        Path rootPath = resolveRootPath(rootClass, basePackage);
 
-        if (resource == null) {
-            throw new IllegalArgumentException(PACKAGE_NOT_FOUND + basePackage);
-        }
-        try (Stream<Path> walk = Files.walk(Paths.get(resource.toURI()))) {
-            walk.filter(Files::isRegularFile)
+        try (Stream<Path> files = Files.walk(rootPath)) {
+            files.filter(path -> path.toString().endsWith(".class"))
+                    .filter(Files::isRegularFile)
+                    .map(rootPath::relativize)
                     .map(Path::toString)
-                    .filter(path -> path.endsWith(".class"))
                     .map(path -> mapPathToClass(path, basePackage))
                     .filter(this::isRegularClass)
                     .filter(this::isComponent)
                     .forEach(this::getBean);
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException(CANNOT_SCAN_PACKAGE + basePackage, e);
         }
     }
 
-    private Class<?> mapPathToClass(String filePath, String basePackage) {
-        String className = Optional.of(filePath)
-                .map(path -> path.replace(File.separatorChar, '.'))
-                .map(path -> path.replace(".class", ""))
-                .filter(path -> path.contains(basePackage))
-                .map(path -> path.substring(path.indexOf(basePackage)))
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format(PACKAGE_NOT_FOUND_IN_PATH, basePackage, filePath)
-                ));
+    private Path resolveRootPath(Class<?> rootClass, String basePackage) {
+        String packagePath = basePackage.replace('.', '/');
+        URL resource = rootClass.getClassLoader().getResource(packagePath);
+        Objects.requireNonNull(resource, PACKAGE_NOT_FOUND + basePackage);
+
+        try {
+            return Path.of(resource.toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(CANNOT_SCAN_PACKAGE + basePackage, e);
+        }
+    }
+
+    private Class<?> mapPathToClass(String relativePath, String basePackage) {
+        String className = relativePath
+                .substring(0, relativePath.length() - 6) //remove .class
+                .replace(File.separatorChar, '.')
+                .transform(path -> basePackage.isEmpty() ?
+                        path : "%s.%s".formatted(basePackage, path));
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {

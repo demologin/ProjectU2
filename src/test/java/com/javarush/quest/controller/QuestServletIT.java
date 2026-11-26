@@ -1,8 +1,7 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.BaseIT;
-import com.javarush.quest.config.constant.Schema.Key;
-import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.controller.base.Response.Redirect;
 import com.javarush.quest.exception.impl.EntityNotFoundException;
@@ -29,9 +28,8 @@ class QuestServletIT extends BaseIT {
     void setUp() {
         questServlet = context.getBean(QuestServlet.class);
         gameRepository = context.getBean(GameRepository.class);
-
         queryParams = new LinkedHashMap<>();
-        queryParams.put(Key.ID, testGame.getCurrentSceneId());
+
         when(request.getAttribute(Key.USER)).thenReturn(testUser);
         when(request.getParameter(Key.ID)).thenReturn("ship");
     }
@@ -41,6 +39,8 @@ class QuestServletIT extends BaseIT {
     void whenGameIsPresentThenLoadScene() {
         testUser.getGames().add(testGame);
         gameRepository.save(testGame);
+        queryParams.put(Key.ID, testGame.getCurrentSceneId());
+
         Response expected = new Redirect(Url.SCENE, queryParams);
         Response actual = questServlet.handleGet(request);
 
@@ -65,6 +65,7 @@ class QuestServletIT extends BaseIT {
     @Test
     @DisplayName("When start quest then redirect to start scene")
     void whenStartQuestThenRedirectToStartScene() {
+        queryParams.put(Key.ID, "ship-0");
         Response expected = new Redirect(Url.SCENE, queryParams);
         Response actual = questServlet.handlePost(request);
         assertEquals(expected, actual);

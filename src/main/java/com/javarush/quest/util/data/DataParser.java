@@ -8,7 +8,5 @@ public interface DataParser {
 
     boolean canParse(String fileName);
 
-    <T> T parse(InputStream stream, Class<T> targetType) throws IOException;
-
     <T> List<T> parseList(InputStream stream, Class<T> elementType) throws IOException;
 }

@@ -39,7 +39,7 @@ public abstract class BaseIT {
         testGame = Game.builder()
                 .userId(testUser.getId())
                 .questId("ship")
-                .currentSceneId("ship-0")
+                .currentSceneId("ship-1")
                 .gameState(GameState.PLAYING)
                 .build();
     }

@@ -1,7 +1,7 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.BaseIT;
-import com.javarush.quest.config.constant.Schema.Key;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.entity.UserStats;
 import org.junit.jupiter.api.DisplayName;

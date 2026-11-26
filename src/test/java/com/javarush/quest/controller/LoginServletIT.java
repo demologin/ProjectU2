@@ -1,8 +1,7 @@
 package com.javarush.quest.controller;
 
 import com.javarush.quest.BaseIT;
-import com.javarush.quest.config.constant.Schema.Key;
-import com.javarush.quest.config.constant.Schema.Url;
+import com.javarush.quest.config.constant.Schema.*;
 import com.javarush.quest.controller.base.Response;
 import com.javarush.quest.controller.base.Response.Redirect;
 import com.javarush.quest.entity.User;

@@ -22,16 +22,6 @@ public class ResourceLoader {
         parsers.add(yamlParser);
     }
 
-    public <T> T load(@NonNull String resource, Class<T> targetType) {
-        DataParser parser = findParser(resource);
-
-        try (InputStream stream = mapResourceToStream(resource)) {
-            return parser.parse(stream, targetType);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
     public <T> List<T> loadList(@NonNull String resource, Class<T> elementType) {
         DataParser parser = findParser(resource);
 
