@@ -1,9 +1,12 @@
 package com.javarush.lesson09;
 
+import com.javarush.khmelov.entity.Answer;
+import com.javarush.khmelov.entity.Question;
 import com.javarush.khmelov.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
 public class SessionCreator implements AutoCloseable {
@@ -12,6 +15,7 @@ public class SessionCreator implements AutoCloseable {
     public SessionCreator() {
         sessionFactory = new Configuration()
                 .configure()
+                .setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy())
                 .addAnnotatedClass(User.class)
                 .buildSessionFactory();
 

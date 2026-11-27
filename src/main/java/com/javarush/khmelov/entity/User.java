@@ -2,9 +2,11 @@ package com.javarush.khmelov.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -46,4 +48,16 @@ public class User implements AbstractEntity {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !this.getClass().equals(Hibernate.getClass(o))) return false;
+
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getClass().hashCode();
+    }
 }
