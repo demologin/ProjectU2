@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp" %>
-<%@ page import="com.javarush.khmelov.entity.State" %>
+<%@ page import="com.javarush.levanov.entity.State" %>
 <c:set var="PLAY" value="<%= State.PLAY %>"/>
 <c:set var="WIN" value="<%= State.WIN %>"/>
 <c:set var="LOSS" value="<%= State.LOSS %>"/>
